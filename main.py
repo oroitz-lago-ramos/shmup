@@ -1,5 +1,4 @@
-from game import Game
+from view_model import Game
 
-if __name__ == "__main__":
-    game = Game()
-    game.main()
+game = Game()
+game.run()
