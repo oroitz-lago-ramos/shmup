@@ -1,4 +1,5 @@
 from enum import Enum
+
 class View_state(Enum):
     START_MENU = 0
     MAIN_MENU = 1

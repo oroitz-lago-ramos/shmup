@@ -1,5 +1,5 @@
 from views import Start_menu_view, Main_menu_view, Game_view, End_menu_view
-from game import View_State
+from shared import View_State
 import pygame
 
 class Game:

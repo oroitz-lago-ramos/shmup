@@ -1,7 +1,10 @@
 from views import View_interface, Text
+from shared import View_State
+import pygame
+
 class Start_menu_view(View_interface):
-    def __init__(self, game) -> None:
-        self.game = game
+    def __init__(self, main_game) -> None:
+        self.main_game = main_game
         self.text = Text()
         
     def draw(self) -> None:
@@ -10,4 +13,4 @@ class Start_menu_view(View_interface):
     def handle_event(self, event) -> None:
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_SPACE:
-                self.app.change_view(View_State.LOGIN)
+                self.app.change_view(View_State.MAIN_MENU)
