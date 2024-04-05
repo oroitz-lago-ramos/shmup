@@ -23,8 +23,7 @@ class Moving_entity (Entity_model):
         self.direction = 4
 
     def update(self):
-        self.move()
-        self.rect.topleft = (self.x, self.y)
+        pass
 
     def get_direction(self):
         return self.direction
