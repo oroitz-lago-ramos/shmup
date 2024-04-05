@@ -13,7 +13,8 @@ class Game_view(View_interface):
     
     def draw(self):
         self.game.screen.fill((0, 0, 0))
-        self.player_ship_display.draw_on_center(self.game.screen)
-    
+    def draw_player_ship(self, x, y):
+        self.player_ship_display.draw_on_center(self.game.screen, x, y)
+        
     def handle_event(self, event):
         pass

@@ -32,6 +32,7 @@ class Game:
             
             self.screen.fill((255, 255, 255))
             self.current_view.draw()
+            self.update()
             pygame.display.update()
             
             self.frame_time = self.clock.tick(60)
@@ -58,6 +59,10 @@ class Game:
                 self.player_ship.move_left()
             elif event.key == pygame.K_RIGHT:
                 self.player_ship.move_right()
+    
+    def update(self):
+        if isinstance(self.current_view, Game_view):
+            self.current_view.draw_player_ship(self.player_ship.x, self.player_ship.y)
     
     def run(self) -> None:
         self.main()
