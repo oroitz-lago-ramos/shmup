@@ -11,7 +11,7 @@ class Game:
     }    
     def __init__(self) -> None:
         pygame.init()
-        self.screen = pygame.display.set_mode((800, 600))
+        self.screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
         self.running = True
         self.change_view(View_state.START_MENU)
         
