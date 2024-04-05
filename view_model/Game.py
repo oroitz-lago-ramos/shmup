@@ -17,7 +17,8 @@ class Game:
         self.running = True
         self.change_view(View_state.START_MENU)
         
-        self.player_ship = Player_ship_model()
+        self.player_ship = Player_ship_model(self.screen.get_width(), self.screen.get_height(), 39, 95, 5)
+    
         
     def change_view(self, state):
         self.current_view = self.VIEW_STATES[state](self)
@@ -62,6 +63,7 @@ class Game:
     
     def update(self):
         if isinstance(self.current_view, Game_view):
+            self.player_ship.update()
             self.current_view.draw_player_ship(self.player_ship.x, self.player_ship.y)
     
     def run(self) -> None:
