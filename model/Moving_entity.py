@@ -7,34 +7,33 @@ class Moving_entity (Entity_model):
     """
     def __init__(self, x, y, width, height, speed, color):
         super().__init__(color, x , y, width, height)
+        self.velocity_x = 0
+        self.velocity_y = 0
         self.speed = speed
-        self.direction = 1
 
     def move_up(self):
         self.y -= self.speed
-        self.direction = 1
+        self.velocity_y = -self.speed
+        self.velocity_x = 0
     
     def move_down(self):
         self.y += self.speed
-        self.direction = 2
+        self.velocity_y = self.speed
+        self.velocity_x = 0
     
     def move_left(self):
         self.x -= self.speed
-        self.direction = 3
+        self.velocity_x = -self.speed
+        self.velocity_y = 0
     
     def move_right(self):
         self.x += self.speed
-        self.direction = 4
+        self.velocity_x = self.speed
+        self.velocity_y = 0
 
     def move(self):
-        if self.direction == 1:
-            self.move_up()
-        elif self.direction == 2:
-            self.move_down()
-        elif self.direction == 3:
-            self.move_left()
-        elif self.direction == 4:
-            self.move_right()
+        self.x += self.velocity_x
+        self.y += self.velocity_y
 
     def update(self):
         self.move()
