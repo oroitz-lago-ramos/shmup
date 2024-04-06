@@ -1,22 +1,23 @@
 from model.Moving_entity import Moving_entity
+
 class Player_ship_model(Moving_entity):
     """A class that represents the player ship in the game. It inherits from the Moving_entity class.
-    arg: x, y, width, height, speed
-    attributes: x, y, width, height, speed, canons
+    arg: x, y, width, height, acceleration, max_speed, color
+    attributes: x, y, width, height, direction, acceleration, max_speed, deceleration, health, canons
     """
-    def __init__(self, x, y, width, height, speed):
-        super().__init__(x, y, width, height, speed, color=(255, 255, 255))
+
+    def __init__(self, x, y, width, height, acceleration, max_speed, color):
+        super().__init__(x, y, width, height, acceleration, max_speed, color)
+        self.timer_decelerate = 0
+        self.deceleration = 2
+        self.health = 100
         self.canons = []
 
-    def move_up(self):
-        self.y -= self.speed
-        self.direction = 1
-    def move_down(self):
-        self.y += self.speed
-        self.direction = 2
-    def move_left(self):
-        self.x -= self.speed
-        self.direction = 3
-    def move_right(self):
-        self.x += self.speed
-        self.direction = 4        
+    def decelerate(self):
+        if self.velocity.length() > 0:
+            if self.velocity.length() > self.deceleration:
+                self.velocity.scale_to_length(max(0, self.velocity.length() - self.deceleration))
+                print(self.velocity.length())
+            else:
+                super().stop()
+        
