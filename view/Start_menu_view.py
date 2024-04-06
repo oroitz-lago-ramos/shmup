@@ -26,3 +26,12 @@ class Start_menu_view(View_interface):
                 self.game.change_view(View_state.MAIN_MENU)
             elif event.key == pygame.K_ESCAPE:
                 self.game.stop()
+        # elif event.type == pygame.MOUSEBUTTONDOWN:
+        #     mouse_x, mouse_y = event.pos
+        #     start_text_x = (self.game.screen.get_width() // 2) - 100
+        #     start_text_y = self.game.screen.get_height() // 1.37
+        #     start_text_width = 200
+        #     start_text_height = 30
+        #     if start_text_x <= mouse_x <= start_text_x + start_text_width and \
+        #     start_text_y <= mouse_y <= start_text_y + start_text_height:
+        #         self.game.change_view(View_state.MAIN_MENU)
