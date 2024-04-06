@@ -16,8 +16,9 @@ class Game:
         self.clock = pygame.time.Clock()
         self.running = True
         self.change_view(View_state.START_MENU)
+        self.pressed_keys = set()
         
-        self.player_ship = Player_ship_model(self.screen.get_width(), self.screen.get_height(), 39, 95, 5)
+        self.player_ship = Player_ship_model(self.screen.get_width()/2, self.screen.get_height()/2, 39, 95, 1, 10,(255, 0, 0))
     
         
     def change_view(self, state):
@@ -29,7 +30,28 @@ class Game:
                 if event.type == pygame.QUIT:
                     self.stop()
                 self.handle_event(event)
+
+            if pygame.K_z in self.pressed_keys:
+                self.player_ship.move_up()
+            if pygame.K_s in self.pressed_keys:
+                self.player_ship.move_down()
+            if pygame.K_q in self.pressed_keys:
+                self.player_ship.move_left()
+            if pygame.K_d in self.pressed_keys:
+                self.player_ship.move_right()
+
+            if pygame.K_SPACE in self.pressed_keys:
+                self.change_view(View_state.END_MENU)
+
             
+            if pygame.K_z not in self.pressed_keys and pygame.K_s not in self.pressed_keys and pygame.K_q not in self.pressed_keys and pygame.K_d not in self.pressed_keys:
+                self.player_ship.timer_decelerate += self.clock.tick_busy_loop(60)
+                if self.player_ship.timer_decelerate >= 100:
+                    self.player_ship.decelerate()
+                    self.player_ship.timer_decelerate -= 100
+            else:
+                self.player_ship.accelerate()
+            self.player_ship.move()
             
             self.screen.fill((255, 255, 255))
             self.current_view.draw()
@@ -44,26 +66,21 @@ class Game:
         elif isinstance(self.current_view, Main_menu_view):
             self.current_view.handle_event(event)
         elif isinstance(self.current_view, Game_view):
-            self.handle_game_event(event)
+            self.handle_key_event(event)
         elif isinstance(self.current_view, End_menu_view):
             self.current_view.handle_event(event)
-    
-    def handle_game_event(self, event):
+
+    def handle_key_event(self, event):
         if event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_SPACE:
-                self.change_view(View_state.END_MENU)
-            elif event.key == pygame.K_UP:
-                self.player_ship.move_up()
-            elif event.key == pygame.K_DOWN:
-                self.player_ship.move_down()
-            elif event.key == pygame.K_LEFT:
-                self.player_ship.move_left()
-            elif event.key == pygame.K_RIGHT:
-                self.player_ship.move_right()
+            self.pressed_keys.add(event.key)
+        elif event.type == pygame.KEYUP:    
+            if event.key in self.pressed_keys:
+                self.pressed_keys.remove(event.key)
+
     
     def update(self):
         if isinstance(self.current_view, Game_view):
-            self.player_ship.update()
+            """self.player_ship.update()"""
             self.current_view.draw_player_ship(self.player_ship.x, self.player_ship.y)
     
     def run(self) -> None:
