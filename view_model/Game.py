@@ -39,8 +39,8 @@ class Game:
     def update(self):
         if isinstance(self.current_view, Game_view):
             """self.player_ship.update()"""
-            self.current_view.draw_player_ship(self.player_ship.x, self.player_ship.y)
             self.current_view.draw_player_base(self.player_base.x, self.player_base.y, self.player_base.color)
+            self.current_view.draw_player_ship(self.player_ship.x, self.player_ship.y)
     
     def check_collision(self):
         pass

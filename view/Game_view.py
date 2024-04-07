@@ -15,12 +15,9 @@ class Game_view(View_interface):
     
     def draw(self):
         self.game.screen.fill((0, 0, 0))
-        # self.draw_player_ship(self.game.player_ship.x, self.game.player_ship.y)
-        # self.draw_player_base()
     def draw_player_ship(self, x, y):
         self.player_ship_display.update(self.game.screen, x, y)
     def draw_player_base(self,x,y, color):
-        # self.player_base_display.update(self.game.screen, self.game.player_base.x, self.game.player_base.y)
         self.player_base_display.update(self.game.screen, x, y, color)
     
     def get_player_ship_rect(self):
