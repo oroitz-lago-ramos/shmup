@@ -8,11 +8,13 @@ class Event_handler:
          
     def handle_event(self):
         if isinstance(self.game.current_view, self.game.VIEW_STATES[vm.View_state.START_MENU]):
+            self.pressed_keys.clear()
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     self.game.stop()
                 self.handle_start_menu_event(event)
         elif isinstance(self.game.current_view, self.game.VIEW_STATES[vm.View_state.MAIN_MENU]):
+            self.pressed_keys.clear()
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     self.game.stop()
