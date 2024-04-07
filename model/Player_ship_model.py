@@ -10,7 +10,6 @@ class Player_ship_model(Moving_entity):
         super().__init__(x, y, width, height, acceleration, max_speed, color)
         self.timer_decelerate = 0
         self.deceleration = 2
-        self.health = 100
         self.canons = []
 
     def decelerate(self):

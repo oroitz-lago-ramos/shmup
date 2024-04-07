@@ -4,6 +4,7 @@ import pygame
 from .Text import Text
 from .Player_ship_display import Player_ship_display
 from .Player_base_display import Player_base_display
+from .Enemy_display import Enemy_display
 
 class Game_view(View_interface):
     def __init__(self, game) -> None:
@@ -12,6 +13,7 @@ class Game_view(View_interface):
         self.text = Text()
         self.player_ship_display = Player_ship_display()
         self.player_base_display = Player_base_display()
+        self.enemy_display = Enemy_display()
     
     def draw(self):
         self.game.screen.fill((0, 0, 0))
@@ -19,6 +21,9 @@ class Game_view(View_interface):
         self.player_ship_display.update(self.game.screen, x, y)
     def draw_player_base(self,x,y, color):
         self.player_base_display.update(self.game.screen, x, y, color)
+    def draw_enemy(self, x, y):
+        self.enemy_display.update(self.game.screen, x, y)
+        
     
     def get_player_ship_rect(self):
         return self.player_ship_display.get_rect()

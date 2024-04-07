@@ -1,7 +1,7 @@
 import pygame
 from view_model import View_state, Event_handler
 from view import Start_menu_view, Main_menu_view, Game_view, End_menu_view
-from model import Player_ship_model, Player_base_model
+from model import Player_ship_model, Player_base_model, Enemy_model
 
 class Game:
     VIEW_STATES = {
@@ -21,7 +21,7 @@ class Game:
         
         self.player_ship = Player_ship_model(self.screen.get_width()/2, self.screen.get_height()/2, 39, 95, 1, 10,(255, 0, 0))
         self.player_base = Player_base_model((0,255,0), self.screen.get_width()/2, self.screen.get_height()/2, 50, 50, 1000)
-    
+        self.enemy = Enemy_model(50, 50, 1, 5, (255, 0, 0), 100, self.player_base.get_center())
         
     def change_view(self, state):
         self.current_view = self.VIEW_STATES[state](self)
@@ -41,7 +41,9 @@ class Game:
             """self.player_ship.update()"""
             self.current_view.draw_player_base(self.player_base.x, self.player_base.y, self.player_base.color)
             self.current_view.draw_player_ship(self.player_ship.x, self.player_ship.y)
-    
+            
+            self.enemy.update()
+            self.current_view.draw_enemy(self.enemy.x, self.enemy.y)
     def check_collision(self):
         pass
     
