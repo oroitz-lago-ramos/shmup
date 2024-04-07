@@ -1,5 +1,5 @@
 import pygame
-from view_model import View_state
+from view_model import View_state, Event_handler
 from view import Start_menu_view, Main_menu_view, Game_view, End_menu_view
 from model import Player_ship_model
 
@@ -16,20 +16,18 @@ class Game:
         self.clock = pygame.time.Clock()
         self.running = True
         self.change_view(View_state.START_MENU)
+        self.event_handler = Event_handler(self)
         
-        self.player_ship = Player_ship_model()
+        
+        self.player_ship = Player_ship_model(self.screen.get_width()/2, self.screen.get_height()/2, 39, 95, 1, 10,(255, 0, 0))
+    
         
     def change_view(self, state):
         self.current_view = self.VIEW_STATES[state](self)
     
     def main(self) -> None:
         while self.running:
-            for event in pygame.event.get():
-                if event.type == pygame.QUIT:
-                    self.stop()
-                self.handle_event(event)
-            
-            
+            self.event_handler.handle_event()
             self.screen.fill((255, 255, 255))
             self.current_view.draw()
             self.update()
@@ -37,31 +35,9 @@ class Game:
             
             self.frame_time = self.clock.tick(60)
     
-    def handle_event(self, event):
-        if isinstance(self.current_view, Start_menu_view):
-            self.current_view.handle_event(event)
-        elif isinstance(self.current_view, Main_menu_view):
-            self.current_view.handle_event(event)
-        elif isinstance(self.current_view, Game_view):
-            self.handle_game_event(event)
-        elif isinstance(self.current_view, End_menu_view):
-            self.current_view.handle_event(event)
-    
-    def handle_game_event(self, event):
-        if event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_SPACE:
-                self.change_view(View_state.END_MENU)
-            elif event.key == pygame.K_UP:
-                self.player_ship.move_up()
-            elif event.key == pygame.K_DOWN:
-                self.player_ship.move_down()
-            elif event.key == pygame.K_LEFT:
-                self.player_ship.move_left()
-            elif event.key == pygame.K_RIGHT:
-                self.player_ship.move_right()
-    
     def update(self):
         if isinstance(self.current_view, Game_view):
+            """self.player_ship.update()"""
             self.current_view.draw_player_ship(self.player_ship.x, self.player_ship.y)
     
     def check_collision(self):

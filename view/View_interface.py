@@ -4,6 +4,4 @@ class View_interface:
         pass
     def draw(self) -> None:
         pass
-    def handle_event(self, event) -> None:
-        pass
     
