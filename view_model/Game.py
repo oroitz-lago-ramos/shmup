@@ -64,6 +64,9 @@ class Game:
         if isinstance(self.current_view, Game_view):
             self.current_view.draw_player_ship(self.player_ship.x, self.player_ship.y)
     
+    def check_collision(self):
+        pass
+    
     def run(self) -> None:
         self.main()
         pygame.quit()
