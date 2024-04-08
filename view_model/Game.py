@@ -67,9 +67,6 @@ class Game:
             entity.y = 0
         elif entity.y + entity.height > self.screen.get_height():
             entity.y = self.screen.get_height() - entity.height
-        print(entity.x, entity.y)
-        print(self.screen.get_width(), self.screen.get_height())
-        print(entity.width, entity.height)
             
     def run(self) -> None:
         self.main()
