@@ -65,15 +65,15 @@ class Game:
         self.check_collision_projectile(self.enemy)
     
     def check_borders(self, entity):
-        if entity.x < 0:
-            entity.x = 0
-        elif entity.x + entity.width > self.screen.get_width():
-            entity.x = self.screen.get_width() - entity.width
+        if entity.x - entity.width // 2 < 0:
+            entity.x = 0 + entity.width // 2
+        elif entity.x + entity.width // 2 > self.screen.get_width():
+            entity.x = self.screen.get_width() - entity.width // 2
 
-        if entity.y < 0:
-            entity.y = 0
-        elif entity.y + entity.height > self.screen.get_height():
-            entity.y = self.screen.get_height() - entity.height
+        if entity.y - entity.height // 2 < 0:
+            entity.y = 0 + entity.height // 2
+        elif entity.y + entity.height // 2 > self.screen.get_height():
+            entity.y = self.screen.get_height() - entity.height // 2
     
     def check_collision_projectile(self, entity):
         for projectile in self.canon.projectiles:
