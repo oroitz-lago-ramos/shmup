@@ -14,7 +14,7 @@ class Moving_entity (Entity_model):
         self.max_speed = max_speed
         self.timer_decelerate = 0
 
-    def set_direction(self, direction):
+    def set_direction_velocity(self, direction):
         self.direction = direction.normalize()
         self.velocity = self.direction * self.velocity.length()
 
