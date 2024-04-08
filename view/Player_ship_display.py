@@ -1,8 +1,16 @@
 import pygame
 
 class Player_ship_display:
-    def __init__(self, player_ship):
-        self.player_ship = player_ship
-    def draw_on_center(self, screen, x , y):
-        pygame.draw.rect(screen, (255, 0, 0), (x - 10, y - 10, 20, 20))
+    def __init__(self):
+        self.x = 0
+        self.y = 0
+        self.rect = pygame.Rect(self.x, self.y, 39, 95)
         
+    def draw(self, screen):
+        pygame.draw.rect(screen, (255, 0, 0), self.rect)
+    
+    def update(self,screen, x, y):
+       self.rect = pygame.Rect(x , y, 39, 95)
+       self.draw(screen)
+    def get_rect(self):
+        return self.rect

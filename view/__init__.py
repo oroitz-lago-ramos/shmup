@@ -5,5 +5,7 @@ from .Game_view import Game_view
 from .End_menu_view import End_menu_view
 from .Player_ship_display import Player_ship_display
 from .Projectil_view import ProjectileView
+from .Player_base_display import Player_base_display
+from .Enemy_display import Enemy_display
 
 from .Text import Text
