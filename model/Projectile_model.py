@@ -1,7 +1,7 @@
 import pygame
 import math
 
-class ProjectileModel:
+class Projectile_model:
     class Projectile:
         def __init__(self, x, y, angle, speed):
             self.x = x
