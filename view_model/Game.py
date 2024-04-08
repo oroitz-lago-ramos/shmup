@@ -12,6 +12,7 @@ class Game:
     }    
     def __init__(self) -> None:
         pygame.init()
+        
         self.screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
         self.clock = pygame.time.Clock()
         self.running = True
@@ -27,14 +28,23 @@ class Game:
         self.current_view = self.VIEW_STATES[state](self)
     
     def main(self) -> None:
+        font = pygame.font.Font(None, 36) # This will be removed later
         while self.running:
             self.event_handler.handle_event()
             self.screen.fill((255, 255, 255))
             self.current_view.draw()
             self.update()
+            
+            fps = self.clock.get_fps()
+
+        # Render the FPS text onto a surface.
+            fps_text = font.render(f"FPS: {fps:.2f}", True, (0, 0, 255))
+            self.screen.blit(fps_text, (10, 10))
             pygame.display.update()
             
             self.frame_time = self.clock.tick(60)
+            
+            
     
     def update(self):
         if isinstance(self.current_view, Game_view):
