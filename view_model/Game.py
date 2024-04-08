@@ -24,7 +24,7 @@ class Game:
         self.player_base = Player_base_model((0,255,0), self.screen.get_width()/2, self.screen.get_height()/2, 50, 50, 1000)
         self.enemy = Enemy_model(50, 50, 1, 5, (255, 0, 0), 100, self.player_base.get_center())
         
-        self.canon = Projectile_model()
+        self.canon = Projectile_model(self.screen.get_width(), self.screen.get_height())
         
     def change_view(self, state):
         self.current_view = self.VIEW_STATES[state](self)
@@ -56,7 +56,7 @@ class Game:
             self.check_collision()
             self.enemy.update()
             self.current_view.draw_enemy(self.enemy.x, self.enemy.y)
-            self.canon.update_time(self.frame_time)
+            self.canon.update_time(self.frame_time, self.player_ship.x, self.player_ship.y)
             self.current_view.draw_projectiles(self.canon.projectiles)
             
     def check_collision(self):

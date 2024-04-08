@@ -14,17 +14,19 @@ class Projectile_model:
             self.x += self.speed * math.cos(self.angle)
             self.y += self.speed * math.sin(self.angle)
 
-    def __init__(self):
+    def __init__(self, width, height):
         self.projectiles = []
         self.time_since_last_shot = 0
-
-    def update_time(self, dt):
+        self.screen_width = width
+        self.screen_height = height
+        
+    def update_time(self, dt, ship_x, ship_y):
         self.time_since_last_shot += dt
 
         # Créer un nouveau projectile toutes les 500 millisecondes (0.5 seconde)
         if self.time_since_last_shot >= 500:
-            angle = math.atan2(pygame.mouse.get_pos()[1] - 300, pygame.mouse.get_pos()[0] - 400)#400 et 300 à remplacer par width /2 et height /2
-            new_projectile = self.Projectile(400, 300, angle, 5)
+            angle = math.atan2(pygame.mouse.get_pos()[1] - 400, pygame.mouse.get_pos()[0] - 300)#400 et 300 à remplacer par width /2 et height /2
+            new_projectile = self.Projectile(ship_x, ship_y, angle, 5)
             self.projectiles.append(new_projectile)
             self.time_since_last_shot = 0  # Réinitialiser le temps écoulé
 
