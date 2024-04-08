@@ -26,7 +26,7 @@ class ProjectileModel:
         self.time_since_last_shot += dt
 
         # Créer un nouveau projectile toutes les 500 millisecondes (0.5 seconde)
-        if self.time_since_last_shot >= 500:
+        if self.time_since_last_shot >= 200:
             angle = math.atan2(pygame.mouse.get_pos()[1] - 300, pygame.mouse.get_pos()[0] - 400)
             new_projectile = self.Projectile(400, 300, angle, 5)
             self.projectiles.append(new_projectile)
