@@ -15,6 +15,9 @@ class Game_view(View_interface):
         self.game.screen.fill((0, 0, 0))
     def draw_player_ship(self, x, y):
         self.player_ship_display.draw_on_center(self.game.screen, x, y)
+    # def draw_projectiles(self, list):
+    #     for pro
+
         
     def handle_event(self, event):
         pass

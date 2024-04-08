@@ -1,7 +1,7 @@
 import pygame
 from view_model import View_state
-from view import Start_menu_view, Main_menu_view, Game_view, End_menu_view
-from model import Player_ship_model
+from view import Projectile_display, Start_menu_view, Main_menu_view, Game_view, End_menu_view
+from model import Player_ship_model , Projectil_model
 
 class Game:
     VIEW_STATES = {
@@ -18,7 +18,7 @@ class Game:
         self.change_view(View_state.START_MENU)
         
         self.player_ship = Player_ship_model()
-        
+        self.canon = Projectil_model()
     def change_view(self, state):
         self.current_view = self.VIEW_STATES[state](self)
     
