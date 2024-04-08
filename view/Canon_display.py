@@ -7,7 +7,7 @@ class Canon_display (sprite.Sprite):
         self.canon = canon_model
 
     def draw_on_center(self, screen, x , y):
-        self.image = pygame.draw.rect(screen, (0, 255, 0), (x + 10, y - 10, 10, 10))
+        pygame.draw.rect(screen, (0, 255, 0), (x + 10/2, y + 10/2, 10, 10))
         self.update_image_rotation(self.canon.calcule_angle(pygame.mouse.get_pos()))
     
     def update_image_rotation(self, angle):
