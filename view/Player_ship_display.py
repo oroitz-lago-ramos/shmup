@@ -6,15 +6,17 @@ class Player_ship_display:
         self.x = 0
         self.y = 0
         self.rect = pygame.Rect(self.x, self.y, 39, 95)
-        
-    def draw(self, screen, list_canons):
         self.canon_display = Canon_display()
+        
+    def draw(self, screen):
         pygame.draw.rect(screen, (255, 0, 0), self.rect)
-        for canon in list_canons:
-            self.canon_display.draw_on_center(screen, canon.x, canon.y)
+        self.canon_display.draw_on_center(screen, self.x, self.y)
     
-    def update(self,screen, x, y, list_canons):
-       self.rect = pygame.Rect(x , y, 39, 95)
-       self.draw(screen, list_canons)
+    def update(self,screen, x, y):
+        self.x = x
+        self.y = y
+        self.rect = pygame.Rect(self.x , self.y, 39, 95)
+        print("rect", self.rect)
+        self.draw(screen)
     def get_rect(self):
         return self.rect
