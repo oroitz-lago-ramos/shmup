@@ -23,7 +23,7 @@ class Projectile_model:
     def update_time(self, dt, ship_x, ship_y):
         self.time_since_last_shot += dt
 
-        if self.time_since_last_shot >= 500:
+        if self.time_since_last_shot >= 100:
             mouse_x, mouse_y = pygame.mouse.get_pos()
             angle = math.atan2(mouse_y - ship_y, mouse_x - ship_x)
             new_projectile = self.Projectile(ship_x, ship_y, angle, 5)
