@@ -10,7 +10,8 @@ class Player_ship_display:
         pygame.draw.rect(screen, (255, 0, 0), self.rect)
     
     def update(self,screen, x, y):
-       self.rect = pygame.Rect(x , y, 39, 95)
+       self.rect.center = (x, y)
        self.draw(screen)
     def get_rect(self):
         return self.rect
+    
