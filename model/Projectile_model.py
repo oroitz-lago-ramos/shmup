@@ -14,19 +14,22 @@ class Projectile_model:
             self.x += self.speed * math.cos(self.angle)
             self.y += self.speed * math.sin(self.angle)
 
-    def __init__(self):
+    def __init__(self, width, height):
         self.projectiles = []
         self.time_since_last_shot = 0
-
-    def update_time(self, dt):
+        self.screen_width = width
+        self.screen_height = height
+        
+    def update_time(self, dt, ship_x, ship_y):
         self.time_since_last_shot += dt
 
-        # Créer un nouveau projectile toutes les 500 millisecondes (0.5 seconde)
         if self.time_since_last_shot >= 500:
-            angle = math.atan2(pygame.mouse.get_pos()[1] - 300, pygame.mouse.get_pos()[0] - 400)#400 et 300 à remplacer par width /2 et height /2
-            new_projectile = self.Projectile(400, 300, angle, 5)
+            mouse_x, mouse_y = pygame.mouse.get_pos()
+            angle = math.atan2(mouse_y - ship_y, mouse_x - ship_x)
+            new_projectile = self.Projectile(ship_x, ship_y, angle, 5)
             self.projectiles.append(new_projectile)
             self.time_since_last_shot = 0  # Réinitialiser le temps écoulé
+
 
         # Mise à jour des projectiles
         for projectile in self.projectiles:
@@ -34,4 +37,4 @@ class Projectile_model:
 
         # Suppression des projectiles hors de l'écran
         self.projectiles = [projectile for projectile in self.projectiles if
-                            0 <= projectile.x <= 800 and 0 <= projectile.y <= 600]#remplacer les valeur par celle de l'écran 
+                            0 <= projectile.x <= self.screen_width and 0 <= projectile.y <= self.screen_height]#remplacer les valeur par celle de l'écran 

@@ -22,9 +22,9 @@ class Game:
         
         self.player_ship = Player_ship_model(self.screen.get_width()/2, self.screen.get_height()/2, 39, 95, 1, 10,(255, 0, 0))
         self.player_base = Player_base_model((0,255,0), self.screen.get_width()/2, self.screen.get_height()/2, 50, 50, 1000)
-        self.enemy = Enemy_model(50, 50, 1, 5, (255, 0, 0), 100, self.player_base.get_center())
+        self.enemy = Enemy_model(50, 50, 1, 5, (255, 0, 0), 30, self.player_base.get_center())
         
-        self.canon = Projectile_model()
+        self.canon = Projectile_model(self.screen.get_width(), self.screen.get_height())
         
     def change_view(self, state):
         self.current_view = self.VIEW_STATES[state](self)
@@ -50,17 +50,19 @@ class Game:
     
     def update(self):
         if isinstance(self.current_view, Game_view):
-            """self.player_ship.update()"""
+            # Here do the check collision from projectiles and for ennemies
             self.current_view.draw_player_base(self.player_base.x, self.player_base.y, self.player_base.color)
             self.current_view.draw_player_ship(self.player_ship.x, self.player_ship.y)
             self.check_collision()
             self.enemy.update()
             self.current_view.draw_enemy(self.enemy.x, self.enemy.y)
-            self.canon.update_time(self.frame_time)
+            self.canon.update_time(self.frame_time, self.player_ship.x, self.player_ship.y)
             self.current_view.draw_projectiles(self.canon.projectiles)
             
     def check_collision(self):
         self.check_borders(self.player_ship)
+        self.check_borders(self.enemy)
+        self.check_collision_projectile(self.enemy)
     
     def check_borders(self, entity):
         if entity.x < 0:
@@ -72,6 +74,13 @@ class Game:
             entity.y = 0
         elif entity.y + entity.height > self.screen.get_height():
             entity.y = self.screen.get_height() - entity.height
+    
+    def check_collision_projectile(self, entity):
+        for projectile in self.canon.projectiles:
+            if entity.x - entity.width // 2 < projectile.x < entity.x + entity.width // 2 and entity.y - entity.height // 2 < projectile.y < entity.y + entity.height // 2:
+                self.canon.projectiles.remove(projectile)
+                entity.take_damage(10)
+                print(entity.get_health(), "health")
             
     def run(self) -> None:
         self.main()
