@@ -35,11 +35,11 @@ class Game:
             self.current_view.draw()
             self.update()
             
+            #Debug FPS
             fps = self.clock.get_fps()
-
-        # Render the FPS text onto a surface.
             fps_text = font.render(f"FPS: {fps:.2f}", True, (0, 0, 255))
             self.screen.blit(fps_text, (10, 10))
+            
             pygame.display.update()
             
             self.frame_time = self.clock.tick(60)
@@ -51,12 +51,26 @@ class Game:
             """self.player_ship.update()"""
             self.current_view.draw_player_base(self.player_base.x, self.player_base.y, self.player_base.color)
             self.current_view.draw_player_ship(self.player_ship.x, self.player_ship.y)
-            
+            self.check_collision()
             self.enemy.update()
             self.current_view.draw_enemy(self.enemy.x, self.enemy.y)
     def check_collision(self):
-        pass
+        self.check_borders(self.player_ship)
     
+    def check_borders(self, entity):
+        if entity.x < 0:
+            entity.x = 0
+        elif entity.x + entity.width > self.screen.get_width():
+            entity.x = self.screen.get_width() - entity.width
+
+        if entity.y < 0:
+            entity.y = 0
+        elif entity.y + entity.height > self.screen.get_height():
+            entity.y = self.screen.get_height() - entity.height
+        print(entity.x, entity.y)
+        print(self.screen.get_width(), self.screen.get_height())
+        print(entity.width, entity.height)
+            
     def run(self) -> None:
         self.main()
         pygame.quit()
