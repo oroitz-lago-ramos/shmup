@@ -1,3 +1,4 @@
+from pygame import math
 class Entity_model:
     def __init__(self, color, x, y, width, height):
         self.color = color
@@ -31,6 +32,7 @@ class Entity_model:
     def get_height(self):
         return self.height
     def get_center(self):
-        return (self.x + self.width // 2, self.y + self.height // 2)
+        return math.Vector2(self.x + self.width // 2, self.y + self.height // 2)
+ 
 
         
