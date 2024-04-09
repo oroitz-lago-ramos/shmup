@@ -31,14 +31,14 @@ class Main_menu_view(View_interface):
         self.game.screen.blit(transparent_surface, (self.game.screen.get_width()//2 - 80, self.game.screen.get_height()//3 + 20))
         
         #Draw the player name
-        name_font = pygame.font.Font("./assets/font/nasalization.otf", 30)
+        real_name_font = Text.FONTS["name_font"]
         max_text_width = 200 - 10  
-        if name_font.size(self.player_name)[0] > max_text_width:
-            while name_font.size(self.player_name)[0] > max_text_width and len(self.player_name) > 0:
+        if real_name_font.size(self.player_name)[0] > max_text_width:
+            while real_name_font.size(self.player_name)[0] > max_text_width and len(self.player_name) > 0:
                 self.player_name = self.player_name[:-1]
 
-        text_x = self.game.screen.get_width()//2 - 80 + (200 - name_font.size(self.player_name)[0])//2
-        self.text.draw_text(self.game.screen, self.player_name, text_x, self.game.screen.get_height()//3 + 24, 30, name_font, (127, 255, 155))
+        text_x = self.game.screen.get_width()//2 - 80 + (200 - real_name_font.size(self.player_name)[0])//2
+        self.text.draw_text(self.game.screen, self.player_name, text_x, self.game.screen.get_height()//3 + 24, 30, "name_font", (127, 255, 155))
 
 
     def draw(self):
@@ -48,23 +48,21 @@ class Main_menu_view(View_interface):
         self.game.screen.blit(background_main_menu, (0, 0))
         
         
-        menu_font = pygame.font.Font("./assets/font/nasalization.otf", 30)
         self.draw_input_field()
         #Button play for the main menu
         button_play = pygame.image.load("./assets/images/button_play.png")
         button_play = pygame.transform.scale(button_play, (200, 50))
         self.game.screen.blit(button_play, (self.game.screen.get_width()//2 - 80, self.game.screen.get_height()//3 + 90))
-        self.text.draw_text(self.game.screen, "Play", self.game.screen.get_width()//2 - 15 , self.game.screen.get_height()//3 + 95, 30, menu_font, (127, 218, 95))
+        self.text.draw_text(self.game.screen, "Play", self.game.screen.get_width()//2 - 15 , self.game.screen.get_height()//3 + 95, 30, "menu_font", (127, 218, 95))
        
         #Button parameter for the main menu
         button_parameter = pygame.image.load("./assets/images/button_parameter.png")
         button_parameter = pygame.transform.scale(button_parameter, (200, 50))
         self.game.screen.blit(button_parameter, (self.game.screen.get_width()//2 - 80, self.game.screen.get_height()//3 + 160))
-        self.text.draw_text(self.game.screen, "Parameter", self.game.screen.get_width()//2 - 60 , self.game.screen.get_height()//3 + 165, 30, menu_font, (127, 218, 95))
+        self.text.draw_text(self.game.screen, "Parameter", self.game.screen.get_width()//2 - 60 , self.game.screen.get_height()//3 + 165, 30, "menu_font", (127, 218, 95))
         
         #Player name
-        player_name = pygame.font.Font("./assets/font/nasalization.otf", 30)
-        self.text.draw_text(self.game.screen, "Player name: ", self.game.screen.get_width()//2 - 160, self.game.screen.get_height()//3 - 25, 30, player_name, (127, 218, 95))
+        self.text.draw_text(self.game.screen, "Player name: ", self.game.screen.get_width()//2 - 160, self.game.screen.get_height()//3 - 25, 30, "player_name", (127, 218, 95))
     
     def handle_event(self, event):
         if event.type == pygame.KEYDOWN:
