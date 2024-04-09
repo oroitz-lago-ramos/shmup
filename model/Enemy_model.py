@@ -11,12 +11,19 @@ class Enemy_model(Moving_entity):
         self.max_health = max_health
         self.health = max_health
         self.player_base_position = player_base_position
+        self.second_phase = False
         self.determine_direction()
     
     def get_health(self):
         return self.health
     def take_damage(self, damage):
         self.health -= damage
+    def get_phase(self):
+        return self.second_phase
+    def set_second_phase(self):
+        self.second_phase = True
+        self.acceleration = 0.5
+        self.max_speed = 2
         
     def update(self):
         self.move()
