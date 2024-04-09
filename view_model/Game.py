@@ -53,14 +53,15 @@ class Game:
             self.player_ship.update(self.frame_time, pygame.mouse.get_pos())
             # Here do the check collision from projectiles and for ennemies
             self.current_view.draw_player_base(self.player_base.x, self.player_base.y, self.player_base.color)
-            self.current_view.draw_player_ship(self.player_ship.x, self.player_ship.y, self.player_ship.canons)
             self.current_view.draw_enemy(self.enemy.x, self.enemy.y)
+            self.current_view.draw_player_ship(self.player_ship.x, self.player_ship.y, self.player_ship.canons)
             self.check_collision()
             
     def check_collision(self):
         self.check_borders(self.player_ship)
         self.check_borders(self.enemy)
-        self.check_collision_projectile(self.enemy)
+        self.check_collision_projectile_enemy(self.enemy)
+        self.check_collision_base()
     
     def check_borders(self, entity):
         if entity.x - entity.width // 2 < 0:
@@ -72,14 +73,30 @@ class Game:
             entity.y = 0 + entity.height // 2
         elif entity.y + entity.height // 2 > self.screen.get_height():
             entity.y = self.screen.get_height() - entity.height // 2
-    
-    def check_collision_projectile(self, entity):
-        # for projectile in self.player_shipcanon.projectiles:
-        #     if entity.x - entity.width // 2 < projectile.x < entity.x + entity.width // 2 and entity.y - entity.height // 2 < projectile.y < entity.y + entity.height // 2:
-        #         self.canon.projectiles.remove(projectile)
-        #         entity.take_damage(10)
-        #         print(entity.get_health(), "health")
-        pass
+            
+    def check_collision_projectile(self):
+        for enemy in self.level.enemies:
+            self.check_collision_projectile_enemy(enemy)
+            
+    def check_collision_base(self):
+        # for enemy in self.level.enemies:
+        #     if enemy.x - enemy.width // 2 < self.player_base.x < enemy.x + enemy.width // 2 and enemy.y - enemy.height // 2 < self.player_base.y < enemy.y + enemy.height // 2:
+        #         self.player_base.take_damage(10)
+        #         self.level.enemies.remove(enemy)
+        base_rect = self.current_view.get_player_base_rect()
+        enemy_rect = pygame.Rect(self.enemy.x, self.enemy.y, self.enemy.width, self.enemy.height)
+        enemy_rect.center = (self.enemy.x, self.enemy.y)
+        if base_rect.colliderect(enemy_rect):
+            self.player_base.take_damage(10)
+            self.enemy = Enemy_model(50, 50, 1, 5, (255, 0, 0), 30, self.player_base.get_center())
+            
+    def check_collision_projectile_enemy(self, entity):
+        for canon in self.player_ship.canons:
+            for projectile in canon.projectiles:
+                if entity.x - entity.width // 2 < projectile.x < entity.x + entity.width // 2 and entity.y - entity.height // 2 < projectile.y < entity.y + entity.height // 2:
+                    entity.take_damage(10)
+                    canon.projectiles.remove(projectile)
+                    
             
     def run(self) -> None:
         self.main()
