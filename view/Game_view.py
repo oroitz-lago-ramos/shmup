@@ -15,19 +15,15 @@ class Game_view(View_interface):
         self.player_ship_display = Player_ship_display()
         self.player_base_display = Player_base_display()
         self.enemy_display = Enemy_display()
-        self.projectile_display = Projectile_display()
     
     def draw(self):
         self.game.screen.fill((0, 0, 0))
-    def draw_player_ship(self, x, y):
-        self.player_ship_display.update(self.game.screen, x, y)
+    def draw_player_ship(self, x, y, canons):
+        self.player_ship_display.update(self.game.screen, x, y, canons)
     def draw_player_base(self,x,y, color):
         self.player_base_display.update(self.game.screen, x, y, color)
     def draw_enemy(self, x, y):
         self.enemy_display.update(self.game.screen, x, y)
-    def draw_projectiles(self, list):
-        for projectile in list:
-            self.projectile_display.draw(projectile.x, projectile.y, 5, self.game.screen)
     
         
     
