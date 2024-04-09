@@ -18,7 +18,7 @@ class Player_ship_model(Moving_entity):
         if self.velocity.length() > 0:
             if self.velocity.length() > self.deceleration:
                 self.velocity.scale_to_length(max(0, self.velocity.length() - self.deceleration))
-                print(self.velocity.length())
+                # print(self.velocity.length())
             else:
                 super().stop()
             
