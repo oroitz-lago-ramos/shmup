@@ -69,13 +69,44 @@ class Event_handler:
                 self.game.change_view(vm.View_state.MAIN_MENU)
             elif event.key == pygame.K_ESCAPE:
                 self.game.stop()
-    
+        elif event.type == pygame.MOUSEBUTTONDOWN:
+            mouse_x, mouse_y = event.pos
+            start_text_x = (self.game.screen.get_width() // 2) - 100
+            start_text_y = self.game.screen.get_height() // 1.37
+            start_text_width = 280
+            start_text_height = 70
+            if start_text_x <= mouse_x <= start_text_x + start_text_width and \
+            start_text_y <= mouse_y <= start_text_y + start_text_height:
+                self.game.change_view(vm.View_state.MAIN_MENU)
+
     def handle_main_menu_event(self, event):
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_SPACE:
                 self.game.change_view(vm.View_state.GAME)
             elif event.key == pygame.K_ESCAPE:
                 self.game.change_view(vm.View_state.START_MENU)
+        elif event.type == pygame.MOUSEBUTTONDOWN:
+            mouse_x, mouse_y = event.pos
+            #Button play for the main menu
+            button_play_x = self.game.screen.get_width()//2 - 80
+            button_play_y = self.game.screen.get_height()//3 + 90
+            button_play_width = 200
+            button_play_height = 50
+            #Button parameter for the main menu
+            button_parameter_x = self.game.screen.get_width()//2 - 80
+            button_parameter_y = self.game.screen.get_height()//3 + 160
+            button_parameter_width = 200
+            button_parameter_height = 50
+            #If the mouse is on the button play
+            if button_play_x <= mouse_x <= button_play_x + button_play_width and \
+            button_play_y <= mouse_y <= button_play_y + button_play_height:
+                self.game.change_view(vm.View_state.GAME)
+            #If the mouse is on the button parameter
+            elif button_parameter_x <= mouse_x <= button_parameter_x + button_parameter_width and \
+            button_parameter_y <= mouse_y <= button_parameter_y + button_parameter_height:
+                self.game.change_view(vm.View_state.PARAMETER)
+
+            
                 
     def handle_end_menu_event(self, event):
         if event.type == pygame.KEYDOWN:
