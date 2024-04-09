@@ -24,6 +24,7 @@ class Main_menu_view(View_interface):
 
 
 
+
         #Draw the input field
         transparent_surface = pygame.Surface((200, 50), pygame.SRCALPHA)
         transparent_surface.set_alpha(220)
@@ -39,6 +40,17 @@ class Main_menu_view(View_interface):
 
         text_x = self.game.screen.get_width()//2 - 80 + (200 - real_name_font.size(self.player_name)[0])//2
         self.text.draw_text(self.game.screen, self.player_name, text_x, self.game.screen.get_height()//3 + 24, 30, "name_font", (127, 255, 155))
+
+
+        event = pygame.event.wait()  # Wait for a single event
+
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_BACKSPACE:
+                # Remove the last character from player_name
+                self.player_name = self.player_name[:-1]
+            elif event.unicode.isalnum() or event.unicode == " ":
+                # Append the pressed character to player_name
+                self.player_name += event.unicode
 
 
     def draw(self):
@@ -63,38 +75,4 @@ class Main_menu_view(View_interface):
         
         #Player name
         self.text.draw_text(self.game.screen, "Player name: ", self.game.screen.get_width()//2 - 160, self.game.screen.get_height()//3 - 25, 30, "player_name", (127, 218, 95))
-    
-    def handle_event(self, event):
-        if event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_SPACE:
-                self.game.change_view(View_state.GAME)
-            elif event.key == pygame.K_ESCAPE:
-                self.game.change_view(View_state.START_MENU)
-            elif event.key == pygame.K_RETURN:
-                player_name = self.player_name
-                print(player_name)
-            else:
-                if event.unicode.isalnum() or event.unicode == " ":
-                    self.player_name += event.unicode
-                elif event.key == pygame.K_BACKSPACE:
-                    self.player_name = self.player_name[:-1]
-        # elif event.type == pygame.MOUSEBUTTONDOWN:
-        #     mouse_x, mouse_y = event.pos
-        #     #Button play for the main menu
-        #     button_play_x = self.game.screen.get_width()//2 - 80
-        #     button_play_y = self.game.screen.get_height()//3 + 90
-        #     button_play_width = 200
-        #     button_play_height = 50
-        #     #Button parameter for the main menu
-        #     button_parameter_x = self.game.screen.get_width()//2 - 80
-        #     button_parameter_y = self.game.screen.get_height()//3 + 160
-        #     button_parameter_width = 200
-        #     button_parameter_height = 50
-        #     #If the mouse is on the button play
-        #     if button_play_x <= mouse_x <= button_play_x + button_play_width and \
-        #     button_play_y <= mouse_y <= button_play_y + button_play_height:
-        #         self.game.change_view(View_state.GAME)
-        #     #If the mouse is on the button parameter
-        #     elif button_parameter_x <= mouse_x <= button_parameter_x + button_parameter_width and \
-        #     button_parameter_y <= mouse_y <= button_parameter_y + button_parameter_height:
-        #         self.game.change_view(View_state.PARAMETER)
+        
