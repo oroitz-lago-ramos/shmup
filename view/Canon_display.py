@@ -2,6 +2,7 @@ import pygame
 from pygame.math import Vector2
 from pygame import sprite
 import math
+from .Projectile_display import Projectile_display
 
 class Canon_display (sprite.Sprite):
     def __init__(self):
@@ -11,6 +12,8 @@ class Canon_display (sprite.Sprite):
         self.rotated_image = None
         self.rotated_image_rect = None
         self.load_image()
+        self.projectile_display = Projectile_display()
+        
 
     def load_image(self):
         self.image = pygame.image.load("assets\images\sprites\Cetan Squall Burst.png")
@@ -19,12 +22,17 @@ class Canon_display (sprite.Sprite):
         self.rect = self.image.get_rect(center=(self.x, self.y))
         """self.update_image_rotation(self.calcule_angle())"""
 
-    def draw_on_center(self, screen, x, y):
+    def draw_on_center(self, screen, x, y, projectiles):
+        self.draw_projectiles(screen, projectiles)
         self.update_canon_position(x,y)
         self.update_image_rotation(self.calcule_angle())
         if self.rotated_image:
             print("rotated image", self.rotated_image)
             screen.blit(self.rotated_image,self.rotated_image_rect)
+    
+    def draw_projectiles(self, screen, projectiles):
+        for projectile in projectiles:
+            self.projectile_display.draw(projectile.x, projectile.y, 5, screen)
 
     def calcule_angle(self):
         mouse_x, mouse_y = pygame.mouse.get_pos()

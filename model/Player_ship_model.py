@@ -22,7 +22,10 @@ class Player_ship_model(Moving_entity):
             else:
                 super().stop()
             
-    def update_canons(self):
+    def update_canons(self,dt,mouse):
         for canon in self.canons:
-            canon.update(self.x,self.y)
+            canon.update(self.x,self.y, dt, mouse)
+    
+    def update(self, dt, mouse):
+        self.update_canons(dt, mouse)
         
