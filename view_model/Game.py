@@ -2,6 +2,7 @@ import pygame
 from view_model import View_state, Event_handler
 from view import Start_menu_view, Main_menu_view, Game_view, End_menu_view
 from model import Player_ship_model, Player_base_model, Enemy_model, Canon_model
+from view_model.Sound_manager import Sound_manager
 
 class Game:
     VIEW_STATES = {
@@ -16,8 +17,9 @@ class Game:
         self.screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
         self.clock = pygame.time.Clock()
         self.running = True
-        self.change_view(View_state.START_MENU)
         self.event_handler = Event_handler(self)
+        self.sound_manager = Sound_manager()
+        self.change_view(View_state.START_MENU)
         
         
         self.player_ship = Player_ship_model(self.screen.get_width()/2, self.screen.get_height()/2, 39, 95, 1, 10,(255, 0, 0))
@@ -27,6 +29,7 @@ class Game:
         
     def change_view(self, state):
         self.current_view = self.VIEW_STATES[state](self)
+        # self.sound_manager.play_menu_music()
     
     def main(self) -> None:
         font = pygame.font.Font(None, 36) # This will be removed later
