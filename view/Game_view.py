@@ -31,7 +31,7 @@ class Game_view(View_interface):
     def draw_enemy(self, enemies):
         for enemy in enemies:
             x, y = enemy.get_center()
-            self.enemy_display.update(self.game.screen, x, y)
+            self.enemy_display.update(self.game.screen, x, y, enemy.width, enemy.height, enemy.color)
     
         
     
