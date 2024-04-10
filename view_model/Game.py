@@ -1,7 +1,7 @@
 import pygame
 from view_model import View_state, Event_handler
 from view import Start_menu_view, Main_menu_view, Game_view, End_menu_view
-from model import Player_ship_model, Player_base_model, Enemy_model, Projectile_model
+from model import Player_ship_model, Player_base_model, Enemy_model, Projectile_model, Level_wave_model
 
 class Game:
     VIEW_STATES = {
@@ -22,7 +22,7 @@ class Game:
         
         self.player_ship = Player_ship_model(self.screen.get_width()/2, self.screen.get_height()/2, 39, 95, 1, 10,(255, 0, 0))
         self.player_base = Player_base_model((0,255,0), self.screen.get_width()/2, self.screen.get_height()/2, 50, 50, 1000)
-        self.enemy = Enemy_model(50, 50, 1, 5, (255, 0, 0), 100, self.player_base.get_center())
+        self.level_wave = Level_wave_model(self.screen.get_width(), self.screen.get_height())
         
         self.canon = Projectile_model(self.screen.get_width(), self.screen.get_height())
         
@@ -54,7 +54,7 @@ class Game:
             self.current_view.draw_player_base(self.player_base.x, self.player_base.y, self.player_base.color)
             self.current_view.draw_player_ship(self.player_ship.x, self.player_ship.y)
             self.check_collision()
-            self.enemy.update()
+            self.level_wave.update(self.frame_time, 5, 5, self.player_base.get_center())
             self.current_view.draw_enemy(self.enemy.x, self.enemy.y)
             self.canon.update_time(self.frame_time, self.player_ship.x, self.player_ship.y)
             self.current_view.draw_projectiles(self.canon.projectiles)

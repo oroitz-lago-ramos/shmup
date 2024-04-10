@@ -4,9 +4,8 @@ from pygame import math
 
 
 class Enemy_model(Moving_entity):
-    def __init__(self, width, height, acceleration, max_speed, color, max_health, player_base_position):
-        self.x, self.y = random.randint(0, 800), random.randint(0, 600)
-        super().__init__(self.x, self.y, width, height, acceleration, max_speed, color)
+    def __init__(self, width, height, acceleration, max_speed, color, max_health, player_base_position,x , y):
+        super().__init__(x, y, width, height, acceleration, max_speed, color)
         self.velocity = math.Vector2(1, 1)
         self.max_health = max_health
         self.health = max_health
