@@ -52,6 +52,8 @@ class Main_menu_view(View_interface):
                 # Append the pressed character to player_name
                 self.player_name += event.unicode
 
+        pygame.time.delay(10)
+
 
     def draw(self):
         #Picture for the main menu
