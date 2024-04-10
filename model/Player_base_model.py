@@ -4,6 +4,7 @@ class Player_base_model(Entity_model):
         super().__init__(color, x, y, width, height)
         self.max_health = max_health
         self.health = max_health
+        self.planet_radius = 172
         
     def get_health(self):
         return self.health

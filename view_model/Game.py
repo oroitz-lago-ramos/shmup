@@ -23,7 +23,7 @@ class Game:
         
         
         self.player_ship = Player_ship_model(self.screen.get_width()/2, self.screen.get_height()/2, 39, 95, 1, 10,(255, 0, 0))
-        self.player_base = Player_base_model((0,255,0), self.screen.get_width()/2, self.screen.get_height()/2, 50, 50, 1000)
+        self.player_base = Player_base_model((0,255,0), self.screen.get_width()/2, self.screen.get_height()/2, 77, 65, 1000)
         self.level = Level_wave_model(self.screen.get_width(), self.screen.get_height())        
         
     def change_view(self, state):
@@ -54,7 +54,7 @@ class Game:
             self.level.update(self.frame_time, 5, 5, self.player_base.get_center())
             self.player_ship.update(self.frame_time, pygame.mouse.get_pos())
             # Here do the check collision from projectiles and for ennemies
-            self.current_view.draw_player_base(self.player_base.x, self.player_base.y, self.player_base.color)
+            self.current_view.draw_player_base(self.player_base.x, self.player_base.y, self.player_base.planet_radius)
             self.current_view.draw_enemy(self.level.current_ennemy)
             self.current_view.draw_player_ship(self.player_ship.x, self.player_ship.y, self.player_ship.canons)
             self.check_collision()
