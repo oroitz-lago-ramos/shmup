@@ -61,10 +61,15 @@ class Game:
             
     def check_collision(self):
         self.check_borders(self.player_ship)
-        # self.check_borders(self.enemy)
-        # self.check_collision_projectile_enemy(self.enemy)
+        self.check_border_projectile()
         self.check_collision_base()
-    
+        self.check_collision_projectile()
+        #Fonction qui va check si enemy dans planete
+    def check_border_projectile(self):
+        for canon in self.player_ship.canons:
+            for projectile in canon.projectiles:
+                if projectile.x < 0 or projectile.x > self.screen.get_width() or projectile.y < 0 or projectile.y > self.screen.get_height():
+                    canon.projectiles.remove(projectile)
     def check_borders(self, entity):
         if entity.x - entity.width // 2 < 0:
             entity.x = 0 + entity.width // 2
@@ -77,19 +82,26 @@ class Game:
             entity.y = self.screen.get_height() - entity.height // 2
             
     def check_collision_projectile(self):
-        for enemy in self.level.enemies:
+        for enemy in self.level.current_ennemy:
             self.check_collision_projectile_enemy(enemy)
             
     def check_collision_base(self):
-        # for enemy in self.level.enemies:
-        #     if enemy.x - enemy.width // 2 < self.player_base.x < enemy.x + enemy.width // 2 and enemy.y - enemy.height // 2 < self.player_base.y < enemy.y + enemy.height // 2:
-        #         self.player_base.take_damage(10)
-        #         self.level.enemies.remove(enemy)
-        base_rect = self.current_view.get_player_base_rect()
-        #enemy_rect = pygame.Rect(self.enemy.x, self.enemy.y, self.enemy.width, self.enemy.height)
-        #enemy_rect.center = (self.enemy.x, self.enemy.y)
-        #if base_rect.colliderect(enemy_rect):
-        #    self.player_base.take_damage(10)
+        for enemy in self.level.current_ennemy:
+            if enemy.second_phase:
+                if enemy.x - enemy.width // 2 < self.player_base.x < enemy.x + enemy.width // 2 and enemy.y - enemy.height // 2 < self.player_base.y < enemy.y + enemy.height // 2:
+                    self.player_base.take_damage(10)
+                    self.level.current_ennemy.remove(enemy)
+            else:
+                x_distance = enemy.x - self.player_base.x
+                y_distance = enemy.y - self.player_base.y
+                distance = (x_distance ** 2 + y_distance ** 2) ** 0.5
+                if distance < enemy.width // 2 + self.player_base.planet_radius and not enemy.second_phase:
+                    enemy.second_phase = True
+                    enemy.width = 30
+                    enemy.height = 30
+                    enemy.color = (255, 0, 255)
+                    
+    
             
     def check_collision_projectile_enemy(self, entity):
         for canon in self.player_ship.canons:

@@ -30,7 +30,7 @@ class Level_wave_model():
             self.randomize_side()
             self.wave[i] = []
             for j in range(nb_enemy):
-                enemy = Enemy_model(50, 50, 1, 5, (255, 0, 0), 100,player_base_position ,self.display_position()[0], self.display_position()[1])
+                enemy = Enemy_model(50, 50, 1, 5, (0, 0, 255), 100,player_base_position ,self.display_position()[0], self.display_position()[1])
                 #enemy = 1 #test remove for clean code
                 self.wave[i].append(enemy)
         return self.wave
@@ -43,7 +43,7 @@ class Level_wave_model():
                 self.wave_number += 1
         elif self.wave_number == len(self.wave)+1 and self.current_ennemy == []:
             self.end = True
-        print(self.end)
+        # print(self.end)
 
 
     def update(self,dt, wave_number, ennemy_per_wave, player_base_position):
