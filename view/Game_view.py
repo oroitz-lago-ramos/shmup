@@ -15,9 +15,15 @@ class Game_view(View_interface):
         self.player_ship_display = Player_ship_display()
         self.player_base_display = Player_base_display()
         self.enemy_display = Enemy_display()
+        self.background_img = pygame.image.load("assets\\images\\background\\Space_Background.png")  
+
+        self.background_img = pygame.transform.scale( self.background_img, (self.game.screen.get_width(),self.game.screen.get_height()))  
+
+
+         
     
     def draw(self):
-        self.game.screen.fill((0, 0, 0))
+        self.game.screen.blit( self.background_img, (0, 0))
     def draw_player_ship(self, x, y, canons):
         self.player_ship_display.update(self.game.screen, x, y, canons)
     def draw_player_base(self,x,y, color):
