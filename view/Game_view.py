@@ -26,8 +26,8 @@ class Game_view(View_interface):
         self.game.screen.blit( self.background_img, (0, 0))
     def draw_player_ship(self, x, y, canons):
         self.player_ship_display.update(self.game.screen, x, y, canons)
-    def draw_player_base(self,x,y, color):
-        self.player_base_display.update(self.game.screen, x, y, color)
+    def draw_player_base(self,x,y, radius):
+        self.player_base_display.update(self.game.screen, x, y, radius)
     def draw_enemy(self, enemies):
         for enemy in enemies:
             x, y = enemy.get_center()
