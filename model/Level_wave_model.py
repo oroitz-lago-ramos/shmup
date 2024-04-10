@@ -1,4 +1,4 @@
-from Enemy_model import Enemy_model
+from .Enemy_model import Enemy_model
 import time
 import random
 
@@ -30,21 +30,21 @@ class Level_wave_model():
             self.randomize_side()
             self.wave[i] = []
             for j in range(nb_enemy):
-                enemy = Enemy_model(50, 50, 1, 5, (255, 0, 0), 100,player_base_position ,(self.display_position()[0], self.display_position()[1]))
+                enemy = Enemy_model(50, 50, 1, 5, (255, 0, 0), 100,player_base_position ,self.display_position()[0], self.display_position()[1])
                 #enemy = 1 #test remove for clean code
                 self.wave[i].append(enemy)
         return self.wave
     
     def update_wave(self):
-        print("self.wave[self.wave_number]",self.wave[self.wave_number])
-        if self.wave[self.wave_number]:
-            self.add_current_ennemy(self.wave_number)
-        else:
-            self.wave_number += 1
-            if self.wave_number == len(self.wave)+1 and self.current_ennemy == []:
-                self.end = True
-            else:
+        if self.wave_number in self.wave:
+            if self.wave[self.wave_number] and self.wave_number != len(self.wave):
                 self.add_current_ennemy(self.wave_number)
+            else:
+                self.wave_number += 1
+        elif self.wave_number == len(self.wave)+1 and self.current_ennemy == []:
+            self.end = True
+        print(self.end)
+
 
     def update(self,dt, wave_number, ennemy_per_wave, player_base_position):
         """Update the level wave model in the main loop
@@ -61,7 +61,7 @@ class Level_wave_model():
                 self.time_since_last_wave = 0
         for ennemy in self.current_ennemy:
             ennemy.update()
-                    
+        
     def ennemy_destroyed(self, ennemy):
         """Remove the ennemy from the current ennemy list
         use in the main loop to remove the ennemy from the game scene
@@ -91,9 +91,10 @@ class Level_wave_model():
         in order to display it on the game scene
         """
         ennemy = self.remove_last_ennemy(wave_number)
-        for i in ennemy:
+        if ennemy:
+            for i in ennemy:
 
-            self.current_ennemy.append(ennemy[i])
+                self.current_ennemy.append(i)
     
     def update_wave_number(self):
         self.wave_number = len(self.wave)
@@ -112,21 +113,4 @@ class Level_wave_model():
             self.timer = f"{minutes:02d}{seconds:02d}"
         return int(self.timer)
         
-
-
-test = Level_wave_model(800,600)
-    
-print(test.create_wave(2,5))
-test.randomize_side()
-print(test.side)
-print("display position ",test.display_position())
-test.update_wave()
-print("get wave",test.get_wave())
-print("get nb ennemy",test.get_nb_enemy())
-print("get timer",test.get_timer())
-print("wave number",test.wave_number)
-print("current ennemy",test.current_ennemy)
-test.update_wave()
-print("current ennemy2",test.current_ennemy)
-
 
