@@ -17,8 +17,8 @@ class Game:
         self.screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
         self.clock = pygame.time.Clock()
         self.running = True
+        self.sound_manager = Sound_manager(self)
         self.event_handler = Event_handler(self)
-        self.sound_manager = Sound_manager()
         self.change_view(View_state.START_MENU)
         
         
@@ -29,7 +29,7 @@ class Game:
         
     def change_view(self, state):
         self.current_view = self.VIEW_STATES[state](self)
-        # self.sound_manager.play_menu_music()
+        self.sound_manager.play_music()
     
     def main(self) -> None:
         font = pygame.font.Font(None, 36) # This will be removed later

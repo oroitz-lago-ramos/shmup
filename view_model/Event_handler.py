@@ -66,6 +66,7 @@ class Event_handler:
     def handle_start_menu_event(self, event):
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_SPACE:
+                self.game.sound_manager.play_start_sound()
                 self.game.change_view(vm.View_state.MAIN_MENU)
             elif event.key == pygame.K_ESCAPE:
                 self.game.stop()
@@ -77,11 +78,13 @@ class Event_handler:
             start_text_height = 70
             if start_text_x <= mouse_x <= start_text_x + start_text_width and \
             start_text_y <= mouse_y <= start_text_y + start_text_height:
+                self.game.sound_manager.play_start_sound()
                 self.game.change_view(vm.View_state.MAIN_MENU)
 
     def handle_main_menu_event(self, event):
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_SPACE:
+                self.game.sound_manager.play_click_sound()
                 self.game.change_view(vm.View_state.GAME)
             elif event.key == pygame.K_ESCAPE:
                 self.game.change_view(vm.View_state.START_MENU)
@@ -100,10 +103,13 @@ class Event_handler:
             #If the mouse is on the button play
             if button_play_x <= mouse_x <= button_play_x + button_play_width and \
             button_play_y <= mouse_y <= button_play_y + button_play_height:
+                self.game.sound_manager.play_click_sound()
+                pygame.time.wait(600)
                 self.game.change_view(vm.View_state.GAME)
             #If the mouse is on the button parameter
             elif button_parameter_x <= mouse_x <= button_parameter_x + button_parameter_width and \
             button_parameter_y <= mouse_y <= button_parameter_y + button_parameter_height:
+                self.game.sound_manager.play_click_sound()
                 self.game.change_view(vm.View_state.PARAMETER)
 
             
