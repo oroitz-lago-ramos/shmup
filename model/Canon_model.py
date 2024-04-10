@@ -53,10 +53,10 @@ class Canon_model(Entity_model):
     def update_projectiles(self, dt, ship_x, ship_y, mouse):
         self.time_since_last_shot += dt
 
-        if self.time_since_last_shot >= 100:
+        if self.time_since_last_shot >= 300:
             mouse_x, mouse_y = mouse
             angle = math.atan2(mouse_y - ship_y, mouse_x - ship_x)
-            new_projectile = Projectile_model(ship_x, ship_y, angle, 15)
+            new_projectile = Projectile_model(ship_x, ship_y, angle, 25)
             self.projectiles.append(new_projectile)
             self.time_since_last_shot = 0  # Réinitialiser le temps écoulé
 
