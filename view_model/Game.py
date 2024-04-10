@@ -1,7 +1,8 @@
 import pygame
 from view_model import View_state, Event_handler
 from view import Start_menu_view, Main_menu_view, Game_view, End_menu_view
-from model import Player_ship_model, Player_base_model, Enemy_model, Projectile_model, Level_wave_model
+from model import Player_ship_model, Player_base_model, Enemy_model, Canon_model
+from view_model.Sound_manager import Sound_manager
 
 class Game:
     VIEW_STATES = {
@@ -16,18 +17,19 @@ class Game:
         self.screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
         self.clock = pygame.time.Clock()
         self.running = True
-        self.change_view(View_state.START_MENU)
+        self.sound_manager = Sound_manager(self)
         self.event_handler = Event_handler(self)
+        self.change_view(View_state.START_MENU)
         
         
         self.player_ship = Player_ship_model(self.screen.get_width()/2, self.screen.get_height()/2, 39, 95, 1, 10,(255, 0, 0))
         self.player_base = Player_base_model((0,255,0), self.screen.get_width()/2, self.screen.get_height()/2, 50, 50, 1000)
-        self.level_wave = Level_wave_model(self.screen.get_width(), self.screen.get_height())
+        self.enemy = Enemy_model(50, 50, 1, 5, (255, 0, 0), 30, self.player_base.get_center())
         
-        self.canon = Projectile_model(self.screen.get_width(), self.screen.get_height())
         
     def change_view(self, state):
         self.current_view = self.VIEW_STATES[state](self)
+        self.sound_manager.play_music()
     
     def main(self) -> None:
         font = pygame.font.Font(None, 36) # This will be removed later
@@ -50,28 +52,54 @@ class Game:
     
     def update(self):
         if isinstance(self.current_view, Game_view):
-            """self.player_ship.update()"""
+            self.enemy.update()
+            self.player_ship.update(self.frame_time, pygame.mouse.get_pos())
+            # Here do the check collision from projectiles and for ennemies
             self.current_view.draw_player_base(self.player_base.x, self.player_base.y, self.player_base.color)
-            self.current_view.draw_player_ship(self.player_ship.x, self.player_ship.y)
-            self.check_collision()
-            self.level_wave.update(self.frame_time, 5, 5, self.player_base.get_center())
             self.current_view.draw_enemy(self.enemy.x, self.enemy.y)
-            self.canon.update_time(self.frame_time, self.player_ship.x, self.player_ship.y)
-            self.current_view.draw_projectiles(self.canon.projectiles)
+            self.current_view.draw_player_ship(self.player_ship.x, self.player_ship.y, self.player_ship.canons)
+            self.check_collision()
             
     def check_collision(self):
         self.check_borders(self.player_ship)
+        self.check_borders(self.enemy)
+        self.check_collision_projectile_enemy(self.enemy)
+        self.check_collision_base()
     
     def check_borders(self, entity):
-        if entity.x < 0:
-            entity.x = 0
-        elif entity.x + entity.width > self.screen.get_width():
-            entity.x = self.screen.get_width() - entity.width
+        if entity.x - entity.width // 2 < 0:
+            entity.x = 0 + entity.width // 2
+        elif entity.x + entity.width // 2 > self.screen.get_width():
+            entity.x = self.screen.get_width() - entity.width // 2
 
-        if entity.y < 0:
-            entity.y = 0
-        elif entity.y + entity.height > self.screen.get_height():
-            entity.y = self.screen.get_height() - entity.height
+        if entity.y - entity.height // 2 < 0:
+            entity.y = 0 + entity.height // 2
+        elif entity.y + entity.height // 2 > self.screen.get_height():
+            entity.y = self.screen.get_height() - entity.height // 2
+            
+    def check_collision_projectile(self):
+        for enemy in self.level.enemies:
+            self.check_collision_projectile_enemy(enemy)
+            
+    def check_collision_base(self):
+        # for enemy in self.level.enemies:
+        #     if enemy.x - enemy.width // 2 < self.player_base.x < enemy.x + enemy.width // 2 and enemy.y - enemy.height // 2 < self.player_base.y < enemy.y + enemy.height // 2:
+        #         self.player_base.take_damage(10)
+        #         self.level.enemies.remove(enemy)
+        base_rect = self.current_view.get_player_base_rect()
+        enemy_rect = pygame.Rect(self.enemy.x, self.enemy.y, self.enemy.width, self.enemy.height)
+        enemy_rect.center = (self.enemy.x, self.enemy.y)
+        if base_rect.colliderect(enemy_rect):
+            self.player_base.take_damage(10)
+            self.enemy = Enemy_model(50, 50, 1, 5, (255, 0, 0), 30, self.player_base.get_center())
+            
+    def check_collision_projectile_enemy(self, entity):
+        for canon in self.player_ship.canons:
+            for projectile in canon.projectiles:
+                if entity.x - entity.width // 2 < projectile.x < entity.x + entity.width // 2 and entity.y - entity.height // 2 < projectile.y < entity.y + entity.height // 2:
+                    entity.take_damage(10)
+                    canon.projectiles.remove(projectile)
+                    
             
     def run(self) -> None:
         self.main()

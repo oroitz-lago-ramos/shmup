@@ -33,5 +33,6 @@ class Entity_model:
         return self.height
     def get_center(self):
         return math.Vector2(self.x + self.width // 2, self.y + self.height // 2)
+ 
 
         

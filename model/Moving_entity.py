@@ -40,10 +40,10 @@ class Moving_entity (Entity_model):
         self.set_direction(direction)
 
     def accelerate(self):
-        print(" direction length ", self.direction.length())
+        # print(" direction length ", self.direction.length())
         if self.direction.length() > 0:
             self.velocity += self.direction * self.acceleration
-            if self.velocity.length() > 0:
+            if self.velocity.length() != 0:
                 self.velocity.scale_to_length(min(self.max_speed, self.velocity.length()))
 
     def stop(self): 
