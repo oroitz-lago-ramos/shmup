@@ -10,7 +10,7 @@ class End_menu_view(View_interface):
         self.text = Text()
     
     def draw(self):
-        self.text.draw_text(self.game.screen, "WELCOME TO END MENU", 50, 50, 30) 
+        self.text.draw_text(self.game.screen, "WELCOME TO END MENU", 50, 50, 30, "menu_font", (0, 0, 255)) 
     def handle_event(self, event):
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_SPACE:
