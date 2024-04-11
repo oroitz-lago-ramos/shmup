@@ -33,7 +33,7 @@ class Canon_display (sprite.Sprite):
     def draw_projectiles(self, screen, projectiles):
         for projectile in projectiles:
             self.projectile_display.draw(projectile.x, projectile.y, projectile.angle, screen)
-            print("projectiles angle", projectile.angle)
+            # print("projectiles angle", projectile.angle)
 
     def calcule_angle(self):
         mouse_x, mouse_y = pygame.mouse.get_pos()
