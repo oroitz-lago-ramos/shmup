@@ -61,6 +61,8 @@ class Level_wave_model():
                 self.time_since_last_wave = 0
         for ennemy in self.current_ennemy:
             ennemy.update()
+            if ennemy.death:
+                self.ennemy_destroyed(ennemy)
         
     def ennemy_destroyed(self, ennemy):
         """Remove the ennemy from the current ennemy list

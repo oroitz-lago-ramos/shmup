@@ -12,6 +12,7 @@ class Enemy_model(Moving_entity):
         self.player_base_position = player_base_position
         self.second_phase = False
         self.determine_direction()
+        self.death = False
     
     def get_health(self):
         return self.health
@@ -26,12 +27,19 @@ class Enemy_model(Moving_entity):
         
     def update(self):
         self.move()
+        self.check_if_alive()
     
     def determine_direction(self):
         # Calculate the direction of the enemy
         # The direction is calculated by the difference between the player_base position and the enemy's position
         direction = self.player_base_position - self.get_center()
         self.set_direction_velocity(direction)
+    
+    def check_if_alive(self):
+        if self.health <= 0:
+            self.death = True
+    
+    
     
     
     
