@@ -9,5 +9,6 @@ from .Enemy_display import Enemy_display
 from .Projectile_display import Projectile_display
 from .Settings_view import Settings_view
 from .Bonus_view import Bonus_view
+from .Hud import Hud
 
 from .Text import Text
