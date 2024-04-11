@@ -8,7 +8,7 @@ class Projectile_display:
         self.image = self.load_image()
 
     def draw(self, x, y, angle, screen):
-            #pygame.draw.circle(screen, (255, 0, 0), (int(x), int(y)), radius)
+            # pygame.draw.circle(screen, (0, 255, 0), (int(x), int(y)), 10)
             self.rect = self.image.get_rect(center=(x,y))
             image = pygame.transform.rotate(self.image, (-(math.degrees(angle)+90)))
             screen.blit(image, self.rect)
