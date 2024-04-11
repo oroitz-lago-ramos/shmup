@@ -7,5 +7,7 @@ from .Player_ship_display import Player_ship_display
 from .Player_base_display import Player_base_display
 from .Enemy_display import Enemy_display
 from .Projectile_display import Projectile_display
+from .Settings_view import Settings_view
+from .Bonus_view import Bonus_view
 
 from .Text import Text

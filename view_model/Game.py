@@ -1,7 +1,7 @@
 import pygame
 from view_model import View_state, Event_handler
-from view import Start_menu_view, Main_menu_view, Game_view, End_menu_view
-from model import Player_ship_model, Player_base_model, Canon_model, Level_wave_model
+from view import Start_menu_view, Main_menu_view, Game_view, End_menu_view, Text, Settings_view, Bonus_view
+from model import Player_ship_model, Player_base_model, Level_wave_model
 from view_model.Sound_manager import Sound_manager
 
 class Game:
@@ -9,11 +9,13 @@ class Game:
         View_state.START_MENU: Start_menu_view,
         View_state.MAIN_MENU: Main_menu_view,
         View_state.GAME: Game_view,
-        View_state.END_MENU: End_menu_view
+        View_state.END_MENU: End_menu_view,
+        View_state.SETTINGS: Settings_view,
+        View_state.CHOOSE_BONUS: Bonus_view
     }    
     def __init__(self) -> None:
         pygame.init()
-        
+        self.text = Text()
         self.screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
         self.clock = pygame.time.Clock()
         self.running = True
@@ -31,17 +33,17 @@ class Game:
         self.sound_manager.play_music()
     
     def main(self) -> None:
-        font = pygame.font.Font(None, 36) # This will be removed later
+        """Main loop of the game"""
         while self.running:
             self.event_handler.handle_event()
+            
             self.screen.fill((255, 255, 255))
             self.current_view.draw()
             self.update()
             
-            #Debug FPS
+            #Printing the fps
             fps = self.clock.get_fps()
-            fps_text = font.render(f"FPS: {fps:.2f}", True, (0, 0, 255))
-            self.screen.blit(fps_text, (10, 10))
+            self.text.draw_fps(self.screen, fps)
             
             pygame.display.update()
             
@@ -61,7 +63,7 @@ class Game:
             self.current_view.draw_player_ship(self.player_ship.x, self.player_ship.y, self.player_ship.canons)
             #Verify for collisions
             self.check_collision()
-            
+#~======================Collisions functions======================~#          
     def check_collision(self):
         self.check_borders(self.player_ship)
         self.check_border_projectile()
@@ -115,6 +117,7 @@ class Game:
     
             
     def check_collision_projectile_enemy(self, entity):
+        """Function that check if the projectile hit the entity and remove the projectile and do damage to the entity if it is the case"""
         entity_rect = pygame.Rect(entity.x, entity.y, entity.width, entity.height)
         for canon in self.player_ship.canons:
             for projectile in canon.projectiles:
@@ -123,6 +126,18 @@ class Game:
                     entity.take_damage(10)
                     canon.projectiles.remove(projectile)
                     
+#===========================Logic verification===========================#
+    def verify_ended_level(self):
+        if self.level.end:
+            self.change_view(View_state.END_MENU)
+            # self.level = Level_wave_model(self.screen.get_width(), self.screen.get_height())
+            # self.player_base.life = 1000
+            # self.player_ship = Player_ship_model(self.screen.get_width()/2, self.screen.get_height()/2, 39, 95, 1, 10,(255, 0, 0))
+            # self.sound_manager.play_music()
+    def verify_lost(self):
+        if self.player_base.death:
+            self.change_view(View_state.END_MENU)
+            
             
     def run(self) -> None:
         self.main()
