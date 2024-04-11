@@ -33,7 +33,7 @@ class Game:
         self.sound_manager.play_music()
     
     def main(self) -> None:
-        """Main loop of the game"""# This will be removed later
+        """Main loop of the game"""
         while self.running:
             self.event_handler.handle_event()
             
