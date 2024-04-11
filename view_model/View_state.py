@@ -6,3 +6,4 @@ class View_state(Enum):
     GAME = 2
     END_MENU = 3
     SETTINGS = 4
+    CHOOSE_BONUS = 5
