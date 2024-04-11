@@ -13,6 +13,7 @@ class Player_ship_model(Moving_entity):
         self.deceleration = 2
         self.health = 100
         self.canons = [Canon_model(self.x, self.y, 5, 5, (0, 0, 255), (0, 1))]
+        self.damage = 10
 
     def decelerate(self):
         if self.velocity.length() > 0:
@@ -28,4 +29,12 @@ class Player_ship_model(Moving_entity):
     
     def update(self, dt, mouse):
         self.update_canons(dt, mouse)
+    
+    def set_bonus(self, bonus):
+        if bonus == "Boost 1":
+            self.damage += 20
+        elif bonus == "Boost 2":
+            for canon in self.canons:
+                canon.reload_time -= 50
+       
         

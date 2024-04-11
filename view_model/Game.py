@@ -23,6 +23,8 @@ class Game:
         self.event_handler = Event_handler(self)
         self.change_view(View_state.START_MENU)
         
+        self.current_level = 1
+        
         
         self.player_ship = Player_ship_model(self.screen.get_width()/2, self.screen.get_height()/2, 39, 95, 1, 10,(255, 0, 0))
         self.player_base = Player_base_model((0,255,0), self.screen.get_width()/2, self.screen.get_height()/2, 77, 65, 1000)
@@ -63,6 +65,8 @@ class Game:
             self.current_view.draw_player_ship(self.player_ship.x, self.player_ship.y, self.player_ship.canons)
             #Verify for collisions
             self.check_collision()
+            self.verify_ended_level()
+            self.verify_lost()
 #~======================Collisions functions======================~#          
     def check_collision(self):
         self.check_borders(self.player_ship)
@@ -123,20 +127,22 @@ class Game:
             for projectile in canon.projectiles:
                 projectile_rect = pygame.Rect(projectile.x, projectile.y, projectile.radius * 2, projectile.radius * 2)
                 if entity_rect.colliderect(projectile_rect):
-                    entity.take_damage(10)
+                    entity.take_damage(self.player_ship.damage)
                     canon.projectiles.remove(projectile)
                     
 #===========================Logic verification===========================#
     def verify_ended_level(self):
         if self.level.end:
-            self.change_view(View_state.END_MENU)
-            # self.level = Level_wave_model(self.screen.get_width(), self.screen.get_height())
-            # self.player_base.life = 1000
-            # self.player_ship = Player_ship_model(self.screen.get_width()/2, self.screen.get_height()/2, 39, 95, 1, 10,(255, 0, 0))
-            # self.sound_manager.play_music()
+            self.change_view(View_state.CHOOSE_BONUS)
     def verify_lost(self):
         if self.player_base.death:
             self.change_view(View_state.END_MENU)
+    
+    def set_player_bonus(self, bonus):
+        self.player_ship.set_bonus(bonus)
+        self.current_level += 1
+        self.change_view(View_state.GAME)
+        self.level = Level_wave_model(self.screen.get_width(), self.screen.get_height())
             
             
     def run(self) -> None:

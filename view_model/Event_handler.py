@@ -31,6 +31,13 @@ class Event_handler:
                 if event.type == pygame.QUIT:
                     self.game.stop()
                 self.handle_end_menu_event(event)
+        elif isinstance(self.game.current_view, self.game.VIEW_STATES[vm.View_state.CHOOSE_BONUS]):
+            self.pressed_keys.clear()
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    self.game.stop()
+                self.handle_choose_bonus_event(event)
+            
             
     def handle_key_event(self, event):
         if event.type == pygame.KEYDOWN:
@@ -121,4 +128,11 @@ class Event_handler:
             elif event.key == pygame.K_ESCAPE:
                 self.game.stop()
 
+    def handle_choose_bonus_event(self, event):
+        if event.type == pygame.MOUSEBUTTONDOWN:  # If the user clicked the mouse
+            x, y = pygame.mouse.get_pos()  # Get the position of the mouse
+            if 100 <= x <= 300 and 250 <= y <= 300:  # If the user clicked on the text for boost 1
+                self.game.set_player_bonus(self.game.current_view.boost1)
+            elif 500 <= x <= 700 and 250 <= y <= 300:  # If the user clicked on the text for boost 2
+                self.game.set_player_bonus(self.game.current_view.boost2)
             
