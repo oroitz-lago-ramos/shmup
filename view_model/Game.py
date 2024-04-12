@@ -55,6 +55,10 @@ class Game:
     
     def update(self):
         if isinstance(self.current_view, Game_view):
+            #Update stats display
+            self.current_view.hud.set_current_timer(self.level.timer)
+            self.current_view.hud.set_current_level(self.level.wave_number)
+
             #Update models
             self.level.update(self.frame_time, 5, 5, self.player_base.get_center())
             self.player_ship.update(self.frame_time, pygame.mouse.get_pos())
