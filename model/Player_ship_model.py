@@ -12,7 +12,7 @@ class Player_ship_model(Moving_entity):
         self.timer_decelerate = 0
         self.deceleration = 2
         self.health = 100
-        self.canons = [Canon_model(self.x, self.y, 5, 5, (0, 0, 255), (0, 1))]
+        self.canons = [Canon_model(self.x, self.y, 5, 5, (0, 0, 255), (0, 1)), Canon_model(self.x, self.y-20, 5, 5, (0, 0, 255), (0, 1))]
 
     def decelerate(self):
         if self.velocity.length() > 0:
