@@ -10,5 +10,6 @@ from .Projectile_display import Projectile_display
 from .Settings_view import Settings_view
 from .Bonus_view import Bonus_view
 from .Hud import Hud
+from .Hall_of_fame_view import Hall_of_fame_view
 
 from .Text import Text

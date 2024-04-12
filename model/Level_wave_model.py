@@ -51,7 +51,7 @@ class Level_wave_model():
         # print(self.end)
 
 
-    def update(self,dt, wave_number, ennemy_per_wave, player_base_position):
+    def update(self,dt, player_base_position, score, score_multiplier):
         """Update the level wave model in the main loop
         param dt: time since last frame
         update the timer and the wave
@@ -67,9 +67,11 @@ class Level_wave_model():
         for ennemy in self.current_ennemy:
             ennemy.update()
             if ennemy.death:
+                score += 10 * score_multiplier
                 self.ennemy_destroyed(ennemy)
         if self.wave_number == len(self.wave) and self.current_ennemy == []:
             self.end = True
+        return score
         # print(self.end)
         # print(self.current_ennemy)
         
