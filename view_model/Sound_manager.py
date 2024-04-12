@@ -27,6 +27,9 @@ class Sound_manager:
         
         self.click = mixer.Sound("./assets/vfx/sounds/click.wav")
         self.click.set_volume(0.2)
+
+        self.shoot = mixer.Sound("./assets/vfx/sounds/laser-gun-shot.mp3")
+        self.shoot.set_volume(0.1)
         
     
     def play_menu_music(self):
@@ -46,6 +49,8 @@ class Sound_manager:
         self.start_sound.play()
     def play_click_sound(self):
         self.click.play()
+    def play_shoot_sound(self):
+        self.shoot.play()
         
         
    
