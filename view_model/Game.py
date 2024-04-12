@@ -1,15 +1,16 @@
 import pygame
 from view_model import View_state, Event_handler
-from view import Start_menu_view, Main_menu_view, Game_view, End_menu_view, Text, Settings_view, Bonus_view
+from view import Start_menu_view, Main_menu_view, Game_view, Text, Settings_view, Bonus_view, Hall_of_fame_view
 from model import Player_ship_model, Player_base_model, Level_wave_model
 from view_model.Sound_manager import Sound_manager
+from view_model.Save_manager import Save_manager
 
 class Game:
     VIEW_STATES = {
         View_state.START_MENU: Start_menu_view,
         View_state.MAIN_MENU: Main_menu_view,
         View_state.GAME: Game_view,
-        View_state.END_MENU: End_menu_view,
+        View_state.HALL_OF_FAME: Hall_of_fame_view,
         View_state.SETTINGS: Settings_view,
         View_state.CHOOSE_BONUS: Bonus_view
     }    
@@ -19,9 +20,11 @@ class Game:
         self.screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
         self.clock = pygame.time.Clock()
         self.running = True
+        self.save_manager = Save_manager()
         self.sound_manager = Sound_manager(self)
         self.event_handler = Event_handler(self)
         self.change_view(View_state.START_MENU)
+        
         
         self.current_level = 1
         self.nunmber_of_waves = 5
@@ -29,10 +32,13 @@ class Game:
         self.enemies_attack_multiplier = 1
         self.enemies_life_multiplier = 0.9
         
+        self.player_name = ""
+        self.score = 0
+        self.score_multiplier = 1
         
         
         self.player_ship = Player_ship_model(self.screen.get_width()/2, self.screen.get_height()/2, 39, 95, 1, 10,(255, 0, 0))
-        self.player_base = Player_base_model((0,255,0), self.screen.get_width()/2, self.screen.get_height()/2, 77, 65, 1000)
+        self.player_base = Player_base_model((0,255,0), self.screen.get_width()/2, self.screen.get_height()/2, 77, 65, 50)
         self.level = Level_wave_model(self.screen.get_width(), self.screen.get_height(), self.nunmber_of_waves, self.number_of_ennemies,self.enemies_attack_multiplier, self.enemies_life_multiplier)        
         
     def change_view(self, state):
@@ -65,7 +71,7 @@ class Game:
             self.current_view.hud.set_current_level(self.level.wave_number)
 
             #Update models
-            self.level.update(self.frame_time, 5, 5, self.player_base.get_center())
+            self.score = self.level.update(self.frame_time, self.player_base.get_center(), self.score, self.score_multiplier)
             self.player_ship.update(self.frame_time, pygame.mouse.get_pos())
             self.player_base.update(self.frame_time)
             #Update views
@@ -77,7 +83,9 @@ class Game:
             self.verify_ended_level()
             self.verify_lost()
         elif isinstance(self.current_view, Main_menu_view):
-            self.current_view.update( self.event_handler.player_name)
+            self.current_view.update(self.player_name)
+        elif isinstance(self.current_view, Hall_of_fame_view):
+            self.current_view.update(self.save_manager.get_best_scores())
             #~======================Collisions functions======================~#          
     def check_collision(self):
         self.check_borders(self.player_ship)
@@ -149,7 +157,8 @@ class Game:
             self.change_view(View_state.CHOOSE_BONUS)
     def verify_lost(self):
         if self.player_base.death:
-            self.change_view(View_state.END_MENU)
+            self.save_manager.save_score(self.player_name, self.score)
+            self.change_view(View_state.HALL_OF_FAME)
     
     def set_player_bonus(self, bonus):
         self.player_ship.set_bonus(bonus)
@@ -158,6 +167,7 @@ class Game:
         self.number_of_ennemies += 2
         self.enemies_attack_multiplier += 0.1
         self.enemies_life_multiplier += 0.1
+        self.score_multiplier += 0.1
         self.change_view(View_state.GAME)
         self.level = Level_wave_model(self.screen.get_width(), self.screen.get_height(), self.nunmber_of_waves, self.number_of_ennemies, self.enemies_attack_multiplier, self.enemies_life_multiplier)
             
