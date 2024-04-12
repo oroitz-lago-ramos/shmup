@@ -62,7 +62,7 @@ class Game:
             #Update models
             self.level.update(self.frame_time, 5, 5, self.player_base.get_center())
             self.player_ship.update(self.frame_time, pygame.mouse.get_pos())
-            self.player_base.update()
+            self.player_base.update(self.frame_time)
             #Update views
             self.current_view.draw_player_base(self.player_base.x, self.player_base.y, self.player_base.planet_radius)
             self.current_view.draw_enemy(self.level.current_ennemy)
@@ -71,7 +71,9 @@ class Game:
             self.check_collision()
             self.verify_ended_level()
             self.verify_lost()
-#~======================Collisions functions======================~#          
+        elif isinstance(self.current_view, Main_menu_view):
+            self.current_view.update( self.event_handler.player_name)
+            #~======================Collisions functions======================~#          
     def check_collision(self):
         self.check_borders(self.player_ship)
         self.check_border_projectile()
@@ -133,6 +135,8 @@ class Game:
                 if entity_rect.colliderect(projectile_rect):
                     entity.take_damage(self.player_ship.damage)
                     canon.projectiles.remove(projectile)
+
+        
                     
 #===========================Logic verification===========================#
     def verify_ended_level(self):
