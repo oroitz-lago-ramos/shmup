@@ -115,7 +115,7 @@ class Level_wave_model():
             self.timer = round(time_end - self.time_start)
             minutes = self.timer // 60
             seconds = self.timer % 60
-            self.timer = f"{minutes:02d}{seconds:02d}"
-        return int(self.timer)
+            self.timer = f"{minutes:02d} : {seconds:02d}"
+        return self.timer
         
 
