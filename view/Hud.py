@@ -48,5 +48,4 @@ class Hud:
         self.level_text = self.text.draw_text(self.level_surface, f"Wave : {self.current_wave}", 17, (self.level_surface.get_height()/4), 12, "stats_font", (0,255,0))
         self.timer_text = self.text.draw_text(self.level_surface, f"Timer : {self.timer}", 17+ self.level_surface.get_width()/3, (self.level_surface.get_height()/4), 12, "stats_font", (0,255,0)) 
         self.score_text = self.text.draw_text(self.level_surface, f"Level : {self.game.current_level}", 17+ 2*self.level_surface.get_width()/3, (self.level_surface.get_height()/4), 12, "stats_font", (0,255,0))
-        self.hp_bar_surface.fill((255,0,0,128))
         self.draw_hud()
