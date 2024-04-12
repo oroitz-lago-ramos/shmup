@@ -64,8 +64,8 @@ class Level_wave_model():
                 self.ennemy_destroyed(ennemy)
         if self.wave_number == len(self.wave) and self.current_ennemy == []:
             self.end = True
-        print(self.end)
-        print(self.current_ennemy)
+        # print(self.end)
+        # print(self.current_ennemy)
         
     def ennemy_destroyed(self, ennemy):
         """Remove the ennemy from the current ennemy list
