@@ -38,6 +38,8 @@ class Enemy_model(Moving_entity):
     def check_if_alive(self):
         if self.health <= 0:
             self.death = True
+    def kill(self):
+        self.death = True
     
     
     
