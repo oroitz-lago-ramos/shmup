@@ -26,7 +26,7 @@ class Game_view(View_interface):
         pass
     
     def draw(self):
-        self.game.screen.blit( self.background_img, (0, 0))
+        self.game.screen.blit(self.background_img, (0, 0))
         self.hud.update()
     def draw_player_ship(self, x, y, canons):
         self.player_ship_display.update(self.game.screen, x, y, canons)
