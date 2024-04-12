@@ -4,15 +4,16 @@ from pygame import math
 
 
 class Enemy_model(Moving_entity):
-    def __init__(self, width, height, acceleration, max_speed, color, max_health, player_base_position,x , y):
+    def __init__(self, width, height, acceleration, max_speed, color, max_health, player_base_position,x , y ,enemies_multiplier, life_multiplier):
         super().__init__(x, y, width, height, acceleration, max_speed, color)
         self.velocity = math.Vector2(1, 1)
-        self.max_health = max_health
+        self.max_health = max_health * life_multiplier if max_health < 200 else 200
         self.health = max_health
         self.player_base_position = player_base_position
         self.second_phase = False
         self.determine_direction()
         self.death = False
+        self.damage = 10 * enemies_multiplier
     
     def get_health(self):
         return self.health

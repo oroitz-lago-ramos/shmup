@@ -24,11 +24,16 @@ class Game:
         self.change_view(View_state.START_MENU)
         
         self.current_level = 1
+        self.nunmber_of_waves = 5
+        self.number_of_ennemies = 5
+        self.enemies_attack_multiplier = 1
+        self.enemies_life_multiplier = 0.9
+        
         
         
         self.player_ship = Player_ship_model(self.screen.get_width()/2, self.screen.get_height()/2, 39, 95, 1, 10,(255, 0, 0))
         self.player_base = Player_base_model((0,255,0), self.screen.get_width()/2, self.screen.get_height()/2, 77, 65, 1000)
-        self.level = Level_wave_model(self.screen.get_width(), self.screen.get_height())        
+        self.level = Level_wave_model(self.screen.get_width(), self.screen.get_height(), self.nunmber_of_waves, self.number_of_ennemies,self.enemies_attack_multiplier, self.enemies_life_multiplier)        
         
     def change_view(self, state):
         self.current_view = self.VIEW_STATES[state](self)
@@ -149,8 +154,12 @@ class Game:
     def set_player_bonus(self, bonus):
         self.player_ship.set_bonus(bonus)
         self.current_level += 1
+        self.nunmber_of_waves += 2
+        self.number_of_ennemies += 2
+        self.enemies_attack_multiplier += 0.1
+        self.enemies_life_multiplier += 0.1
         self.change_view(View_state.GAME)
-        self.level = Level_wave_model(self.screen.get_width(), self.screen.get_height())
+        self.level = Level_wave_model(self.screen.get_width(), self.screen.get_height(), self.nunmber_of_waves, self.number_of_ennemies, self.enemies_attack_multiplier, self.enemies_life_multiplier)
             
             
     def run(self) -> None:

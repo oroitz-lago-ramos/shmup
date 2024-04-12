@@ -3,9 +3,15 @@ import time
 import random
 
 class Level_wave_model():
-    def __init__(self,width,height):
+    def __init__(self,width,height, number_of_waves, number_of_ennemies, enemies_multiplier, life_multiplier):
         self.wave = {}
         self.wave_number = 0
+        
+        self.number_of_waves = number_of_waves
+        self.number_of_ennemies = number_of_ennemies
+        self.enemies_multiplier = enemies_multiplier
+        self.life_multiplier = life_multiplier
+        
         self.screen_width = width
         self.screen_height = height
         self.timer_running = False #True if the timer is running
@@ -30,7 +36,7 @@ class Level_wave_model():
             self.randomize_side()
             self.wave[i] = []
             for j in range(nb_enemy):
-                enemy = Enemy_model(50, 50, 1, 5, (0, 0, 255), 100,player_base_position ,self.display_position()[0], self.display_position()[1])
+                enemy = Enemy_model(50, 50, 1, 5, (0, 0, 255), 50,player_base_position ,self.display_position()[0], self.display_position()[1], self.enemies_multiplier, self.life_multiplier)
                 #enemy = 1 #test remove for clean code
                 self.wave[i].append(enemy)
         return self.wave
@@ -51,7 +57,7 @@ class Level_wave_model():
         update the timer and the wave
         """
         if self.wave_number == 0 and self.wave == {}:
-            self.create_wave(wave_number, ennemy_per_wave, player_base_position)
+            self.create_wave(self.number_of_waves, self.number_of_ennemies, player_base_position)
         else:
             self.update_timer()
             self.time_since_last_wave += dt
