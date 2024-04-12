@@ -54,13 +54,13 @@ class Main_menu_view(View_interface):
         
         self.draw_input_field()
         #Button play for the main menu
-        button_play = pygame.image.load("./assets/images/button_play.png")
+        button_play = pygame.image.load("./assets/images/table.png")
         button_play = pygame.transform.scale(button_play, (200, 50))
         self.game.screen.blit(button_play, (self.game.screen.get_width()//2 - 80, self.game.screen.get_height()//3 + 90))
         self.text.draw_text(self.game.screen, "Play", self.game.screen.get_width()//2 - 15 , self.game.screen.get_height()//3 + 95, 30, "menu_font", (127, 218, 95))
        
         #Button parameter for the main menu
-        button_parameter = pygame.image.load("./assets/images/button_parameter.png")
+        button_parameter = pygame.image.load("./assets/images/table.png")
         button_parameter = pygame.transform.scale(button_parameter, (200, 50))
         self.game.screen.blit(button_parameter, (self.game.screen.get_width()//2 - 80, self.game.screen.get_height()//3 + 160))
         self.text.draw_text(self.game.screen, "Parameter", self.game.screen.get_width()//2 - 60 , self.game.screen.get_height()//3 + 165, 30, "menu_font", (127, 218, 95))
