@@ -24,11 +24,16 @@ class Game:
         self.change_view(View_state.START_MENU)
         
         self.current_level = 1
+        self.nunmber_of_waves = 5
+        self.number_of_ennemies = 5
+        self.enemies_attack_multiplier = 1
+        self.enemies_life_multiplier = 0.9
+        
         
         
         self.player_ship = Player_ship_model(self.screen.get_width()/2, self.screen.get_height()/2, 39, 95, 1, 10,(255, 0, 0))
         self.player_base = Player_base_model((0,255,0), self.screen.get_width()/2, self.screen.get_height()/2, 77, 65, 100)
-        self.level = Level_wave_model(self.screen.get_width(), self.screen.get_height())        
+        self.level = Level_wave_model(self.screen.get_width(), self.screen.get_height(), self.nunmber_of_waves, self.number_of_ennemies,self.enemies_attack_multiplier, self.enemies_life_multiplier)        
         
     def change_view(self, state):
         self.current_view = self.VIEW_STATES[state](self)
@@ -63,7 +68,7 @@ class Game:
             #Update models
             self.level.update(self.frame_time, 5, 5, self.player_base.get_center())
             self.player_ship.update(self.frame_time, pygame.mouse.get_pos())
-            self.player_base.update()
+            self.player_base.update(self.frame_time)
             #Update views
             self.current_view.draw_player_base(self.player_base.x, self.player_base.y, self.player_base.planet_radius)
             self.current_view.draw_enemy(self.level.current_ennemy)
@@ -72,7 +77,9 @@ class Game:
             self.check_collision()
             self.verify_ended_level()
             self.verify_lost()
-#~======================Collisions functions======================~#          
+        elif isinstance(self.current_view, Main_menu_view):
+            self.current_view.update( self.event_handler.player_name)
+            #~======================Collisions functions======================~#          
     def check_collision(self):
         self.check_borders(self.player_ship)
         self.check_border_projectile()
@@ -134,6 +141,8 @@ class Game:
                 if entity_rect.colliderect(projectile_rect):
                     entity.take_damage(self.player_ship.damage)
                     canon.projectiles.remove(projectile)
+
+        
                     
 #===========================Logic verification===========================#
     def verify_ended_level(self):
@@ -146,8 +155,12 @@ class Game:
     def set_player_bonus(self, bonus):
         self.player_ship.set_bonus(bonus)
         self.current_level += 1
+        self.nunmber_of_waves += 2
+        self.number_of_ennemies += 2
+        self.enemies_attack_multiplier += 0.1
+        self.enemies_life_multiplier += 0.1
         self.change_view(View_state.GAME)
-        self.level = Level_wave_model(self.screen.get_width(), self.screen.get_height())
+        self.level = Level_wave_model(self.screen.get_width(), self.screen.get_height(), self.nunmber_of_waves, self.number_of_ennemies, self.enemies_attack_multiplier, self.enemies_life_multiplier)
             
             
     def run(self) -> None:
