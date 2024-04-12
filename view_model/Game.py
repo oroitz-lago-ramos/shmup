@@ -27,7 +27,7 @@ class Game:
         
         
         self.player_ship = Player_ship_model(self.screen.get_width()/2, self.screen.get_height()/2, 39, 95, 1, 10,(255, 0, 0))
-        self.player_base = Player_base_model((0,255,0), self.screen.get_width()/2, self.screen.get_height()/2, 77, 65, 1000)
+        self.player_base = Player_base_model((0,255,0), self.screen.get_width()/2, self.screen.get_height()/2, 77, 65, 100)
         self.level = Level_wave_model(self.screen.get_width(), self.screen.get_height())        
         
     def change_view(self, state):
@@ -58,6 +58,7 @@ class Game:
             #Update stats display
             self.current_view.hud.set_current_timer(self.level.timer)
             self.current_view.hud.set_current_level(self.level.wave_number)
+            self.current_view.hud.set_current_hp(self.player_base.health)
 
             #Update models
             self.level.update(self.frame_time, 5, 5, self.player_base.get_center())
