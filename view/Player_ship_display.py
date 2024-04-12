@@ -9,7 +9,7 @@ class Player_ship_display:
         self.image = pygame.image.load("assets\\images\\sprites\\spaceship.png")
         self.image = pygame.transform.scale(self.image, (39*2, 95*2))
         self.image_surface = pygame.Surface((39*2, 95*2), pygame.SRCALPHA)
-        self.image_surface.fill((255,0,0,128))
+        self.image_surface.fill((255,0,0,0))
         self.image_rect = self.image.get_rect(center=(self.x, self.y))
         self.canon_display = Canon_display()
         
