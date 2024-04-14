@@ -41,16 +41,8 @@ class Main_menu_view(View_interface):
         text_x = self.game.screen.get_width()//2 - 80 + (200 - real_name_font.size(self.player_name)[0])//2
         self.text.draw_text(self.game.screen, self.player_name, text_x, self.game.screen.get_height()//3 + 24, 30, "name_font", (127, 255, 155))
 
-
-        event = pygame.event.wait()  # Wait for a single event
-
-        if event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_BACKSPACE:
-                # Remove the last character from player_name
-                self.player_name = self.player_name[:-1]
-            elif event.unicode.isalnum() or event.unicode == " ":
-                # Append the pressed character to player_name
-                self.player_name += event.unicode
+            
+        # pygame.time.delay(10)
 
 
     def draw(self):
@@ -75,4 +67,6 @@ class Main_menu_view(View_interface):
         
         #Player name
         self.text.draw_text(self.game.screen, "Player name: ", self.game.screen.get_width()//2 - 160, self.game.screen.get_height()//3 - 25, 30, "player_name", (127, 218, 95))
-        
+    
+    def update(self, player_name):
+        self.player_name = player_name

@@ -16,7 +16,7 @@ class Canon_display (sprite.Sprite):
         
 
     def load_image(self):
-        self.image = pygame.image.load("assets\images\sprites\Cetan Squall Burst.png")
+        self.image = pygame.image.load("assets\\images\\sprites\\Cetan Squall Burst.png")
         self.image = pygame.transform.scale(self.image, (30, 65))
         self.image = pygame.transform.rotate(self.image, 0)
         self.rect = self.image.get_rect(center=(self.x, self.y))
@@ -32,7 +32,8 @@ class Canon_display (sprite.Sprite):
     
     def draw_projectiles(self, screen, projectiles):
         for projectile in projectiles:
-            self.projectile_display.draw(projectile.x, projectile.y, 5, screen)
+            self.projectile_display.draw(projectile.x, projectile.y, projectile.angle, screen)
+            # print("projectiles angle", projectile.angle)
 
     def calcule_angle(self):
         mouse_x, mouse_y = pygame.mouse.get_pos()

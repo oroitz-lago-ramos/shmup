@@ -39,7 +39,7 @@ class Sound_manager:
             pass
         elif isinstance(self.game.current_view, self.game.VIEW_STATES[View_state.GAME]):
             self.menu.stop()
-        elif isinstance(self.game.current_view, self.game.VIEW_STATES[View_state.END_MENU]):
+        elif isinstance(self.game.current_view, self.game.VIEW_STATES[View_state.HALL_OF_FAME]):
             pass
     
     def play_start_sound(self):
