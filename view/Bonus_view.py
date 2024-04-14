@@ -9,8 +9,11 @@ class Bonus_view(View_interface):
         self.text = Text()
         self.boost1 = "Boost 1"
         self.boost2 = "Boost 2"
+        self.bg = pygame.image.load("assets\\images\\background\\space_shmup.jpg")
+        self.list_bonus_img = [] #random le choice puis le blit sous les nom des choix
     
     def draw(self) -> None:
-        self.text.draw_text(self.game.screen, "Choose a bonus", 50, 50, 50, "none_font", (0, 0, 0))  # Draw the title
-        self.text.draw_text(self.game.screen, "Boost 1", 100, 250, 50, "none_font", (0, 0, 0))
-        self.text.draw_text(self.game.screen, "Boost 2", 500, 250, 50, "none_font", (0, 0, 0))
+        self.game.screen.blit(self.bg, (0, 0))
+        self.text.draw_text(self.game.screen, "Choose a bonus", 50, 50, 50, "none_font", (255, 255, 255))  # Draw the title
+        self.text.draw_text(self.game.screen, "Boost 1", 100, 250, 50, "none_font", (255, 255, 255))
+        self.text.draw_text(self.game.screen, "Boost 2", 500, 250, 50, "none_font", (255, 255, 255))
