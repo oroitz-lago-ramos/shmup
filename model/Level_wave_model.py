@@ -67,7 +67,10 @@ class Level_wave_model():
         for ennemy in self.current_ennemy:
             ennemy.update()
             if ennemy.death:
-                score += 10 * score_multiplier
+                if not score == None:
+                    score += 10 * score_multiplier
+                else:
+                    score = 10 * score_multiplier
                 self.ennemy_destroyed(ennemy)
         if self.wave_number == len(self.wave) and self.current_ennemy == []:
             self.end = True

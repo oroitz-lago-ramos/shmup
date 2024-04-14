@@ -33,7 +33,7 @@ class Game:
         self.enemies_life_multiplier = 0.9
         
         self.player_name = ""
-        self.score = 0
+        self.score = None
         self.score_multiplier = 1
         
         
@@ -44,6 +44,13 @@ class Game:
     def change_view(self, state):
         self.current_view = self.VIEW_STATES[state](self)
         self.sound_manager.play_music()
+        
+    def run(self) -> None:
+        self.main()
+        pygame.quit()
+        
+    def stop(self) -> None:
+        self.running = False
     
     def main(self) -> None:
         """Main loop of the game"""
@@ -86,7 +93,7 @@ class Game:
         elif isinstance(self.current_view, Main_menu_view):
             self.current_view.update(self.player_name)
         elif isinstance(self.current_view, Hall_of_fame_view):
-            self.current_view.update(self.save_manager.get_best_scores())
+            self.current_view.update(self.save_manager.get_best_scores(), self.save_manager.get_last_score())
             #~======================Collisions functions======================~#          
     def check_collision(self):
         self.check_borders(self.player_ship)
@@ -158,6 +165,8 @@ class Game:
             self.change_view(View_state.CHOOSE_BONUS)
     def verify_lost(self):
         if self.player_base.death:
+            if self.score == None:
+                self.score = 0
             self.save_manager.save_score(self.player_name, self.score)
             self.change_view(View_state.HALL_OF_FAME)
     
@@ -171,11 +180,17 @@ class Game:
         self.score_multiplier += 0.1
         self.change_view(View_state.GAME)
         self.level = Level_wave_model(self.screen.get_width(), self.screen.get_height(), self.nunmber_of_waves, self.number_of_ennemies, self.enemies_attack_multiplier, self.enemies_life_multiplier)
-            
-            
-    def run(self) -> None:
-        self.main()
-        pygame.quit()
         
-    def stop(self) -> None:
-        self.running = False
+#===========================RESET GAME===========================#
+    def reset_game(self):
+        self.current_level = 1
+        self.nunmber_of_waves = 5
+        self.number_of_ennemies = 5
+        self.enemies_attack_multiplier = 1
+        self.enemies_life_multiplier = 0.9
+        self.score = None
+        self.score_multiplier = 1
+        self.player_ship = Player_ship_model(self.screen.get_width()/2, self.screen.get_height()/2, 39, 95, 1, 10,(255, 0, 0))
+        self.player_base = Player_base_model((0,255,0), self.screen.get_width()/2, self.screen.get_height()/2, 77, 65, 50)
+        self.level = Level_wave_model(self.screen.get_width(), self.screen.get_height(), self.nunmber_of_waves, self.number_of_ennemies,self.enemies_attack_multiplier, self.enemies_life_multiplier)        
+        self.change_view(View_state.GAME)

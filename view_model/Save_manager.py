@@ -31,3 +31,9 @@ class Save_manager:
         scores.sort(key=lambda score: score['score'], reverse=True)
 
         return scores[:5]  # Change this number to change the number of scores returned
+    
+    def get_last_score(self):
+        scores = self.load_scores()
+        if len(scores) > 0:
+            return scores[-1]
+        return None

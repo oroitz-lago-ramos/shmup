@@ -58,6 +58,7 @@ class Event_handler:
 
         if pygame.K_SPACE in self.pressed_keys:
             self.game.player_base.use_bomb(self.game.level.current_ennemy)
+            self.game.player_base.death = True
 
         
         if pygame.K_z not in self.pressed_keys and pygame.K_s not in self.pressed_keys and pygame.K_q not in self.pressed_keys and pygame.K_d not in self.pressed_keys:
@@ -92,15 +93,19 @@ class Event_handler:
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_ESCAPE:
                 self.game.change_view(vm.View_state.START_MENU)
-            elif event.key == pygame.K_RETURN:
+            elif event.key == pygame.K_RETURN and (self.game.player_name != "" and self.game.player_name != " "):
                 self.game.sound_manager.play_click_sound()
-                self.game.change_view(vm.View_state.GAME)
+                self.game.reset_game()
             elif event.key == pygame.K_BACKSPACE:
                 # Remove the last character from player_name
+                self.game.sound_manager.play_click_sound()
                 self.game.player_name = self.game.player_name[:-1]
             elif event.unicode.isalnum() or event.unicode == " ":
                 # Append the pressed character to player_name
+                if self.game.player_name == "" and event.unicode == " ":
+                    return
                 self.game.player_name += event.unicode
+                self.game.sound_manager.play_click_sound()
 
         elif event.type == pygame.MOUSEBUTTONDOWN:
             mouse_x, mouse_y = event.pos
@@ -116,10 +121,10 @@ class Event_handler:
             button_parameter_height = 50
             #If the mouse is on the button play
             if button_play_x <= mouse_x <= button_play_x + button_play_width and \
-            button_play_y <= mouse_y <= button_play_y + button_play_height and (self.game.player_name != "" or self.game.player_name != " "):
+            button_play_y <= mouse_y <= button_play_y + button_play_height and (self.game.player_name != "" and self.game.player_name != " "):
                 self.game.sound_manager.play_click_sound()
                 # pygame.time.wait(600)
-                self.game.change_view(vm.View_state.GAME)
+                self.game.reset_game()
             #If the mouse is on the button parameter
             elif button_parameter_x <= mouse_x <= button_parameter_x + button_parameter_width and \
             button_parameter_y <= mouse_y <= button_parameter_y + button_parameter_height:
@@ -130,9 +135,7 @@ class Event_handler:
                 
     def handle_hall_of_fame_event(self, event):
         if event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_SPACE:
-                self.game.change_view(vm.View_state.MAIN_MENU)
-            elif event.key == pygame.K_ESCAPE:
+            if event.key == pygame.K_ESCAPE:
                 self.game.stop()
 
     def handle_choose_bonus_event(self, event):

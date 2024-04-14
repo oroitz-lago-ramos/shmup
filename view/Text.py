@@ -17,6 +17,8 @@ class Text:
              "player_name" : pygame.font.Font("./assets/font/nasalization.otf", 30),
              "none_font" : pygame.font.Font(None, 36),
              "stats_font" : pygame.font.Font("./assets/font/nasalization.otf", 30),
+             "last_score_font" : pygame.font.Font("./assets/font/nasalization.otf", 60),
+             "score_font" : pygame.font.Font("./assets/font/nasalization.otf", 38),
              }
     def __init__(self) -> None:
         # pygame.font.init()
