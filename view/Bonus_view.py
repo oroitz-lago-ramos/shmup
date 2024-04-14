@@ -10,6 +10,7 @@ class Bonus_view(View_interface):
         self.boost1 = "Boost 1"
         self.boost2 = "Boost 2"
         self.bg = pygame.image.load("assets\\images\\background\\space_shmup.jpg")
+        self.bg = pygame.transform.scale( self.bg, (self.game.screen.get_width(),self.game.screen.get_height()))  
         self.list_bonus_img = [] #random le choice puis le blit sous les nom des choix
     
     def draw(self) -> None:
