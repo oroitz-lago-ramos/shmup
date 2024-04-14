@@ -11,7 +11,7 @@ class Projectile_model:
         self.radius = 5  # Rayon du projectile
         mixer.init()
         self.shoot_sound = mixer.Sound("./assets/vfx/sounds/shoot.wav")
-        self.shoot_sound.set_volume(0.1)
+        self.shoot_sound.set_volume(0.05)
         self.shoot_sound.play()
 
     def update(self):
