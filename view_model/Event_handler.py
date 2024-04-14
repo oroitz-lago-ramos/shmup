@@ -97,10 +97,12 @@ class Event_handler:
                 self.game.change_view(vm.View_state.GAME)
             elif event.key == pygame.K_BACKSPACE:
                 # Remove the last character from player_name
+                self.game.sound_manager.play_click_sound()
                 self.game.player_name = self.game.player_name[:-1]
             elif event.unicode.isalnum() or event.unicode == " ":
                 # Append the pressed character to player_name
                 self.game.player_name += event.unicode
+                self.game.sound_manager.play_click_sound()
 
         elif event.type == pygame.MOUSEBUTTONDOWN:
             mouse_x, mouse_y = event.pos

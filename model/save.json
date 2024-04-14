@@ -1,11 +1,1 @@
-[
-  { "user_name": "Txangu", "score": 40 },
-  { "user_name": "Txangu", "score": 80 },
-  { "user_name": "Txangu", "score": 265.0 },
-  { "user_name": "Txangu", "score": 40 },
-  { "user_name": "Txangu", "score": 100 },
-  { "user_name": "Txangu", "score": 70 },
-  { "user_name": "Txangu", "score": 50 },
-  { "user_name": "Txangu", "score": 50 },
-  { "user_name": "Txangu", "score": 120 }
-]
+[{"user_name": "Txangu", "score": 40}, {"user_name": "Txangu", "score": 80}, {"user_name": "Txangu", "score": 265.0}, {"user_name": "Txangu", "score": 40}, {"user_name": "Txangu", "score": 100}, {"user_name": "Txangu", "score": 70}, {"user_name": "Txangu", "score": 50}, {"user_name": "Txangu", "score": 50}, {"user_name": "Txangu", "score": 120}, {"user_name": "", "score": 100}, {"user_name": " ", "score": 40}, {"user_name": "", "score": 10}, {"user_name": "Txangu", "score": 20}, {"user_name": "", "score": 0}, {"user_name": "  ", "score": 0}]
