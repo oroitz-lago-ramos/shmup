@@ -10,7 +10,7 @@ class Player_ship_model(Moving_entity):
     def __init__(self, x, y, width, height, acceleration, max_speed, color):
         super().__init__(x, y, width, height, acceleration, max_speed, color)
         self.timer_decelerate = 0
-        self.deceleration = 2
+        self.deceleration = 1
         self.health = 100
         self.canons = [Canon_model(self.x, self.y, 5, 5, (0, 0, 255), (0, 1))]
         self.damage = 10
