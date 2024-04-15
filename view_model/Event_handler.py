@@ -58,8 +58,6 @@ class Event_handler:
 
         if pygame.K_SPACE in self.pressed_keys:
             self.game.player_base.use_bomb(self.game.level.current_ennemy)
-            self.game.player_base.death = True
-
         
         if pygame.K_z not in self.pressed_keys and pygame.K_s not in self.pressed_keys and pygame.K_q not in self.pressed_keys and pygame.K_d not in self.pressed_keys:
             self.game.player_ship.timer_decelerate += 1
