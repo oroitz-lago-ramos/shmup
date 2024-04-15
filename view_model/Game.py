@@ -93,7 +93,7 @@ class Game:
         elif isinstance(self.current_view, Main_menu_view):
             self.current_view.update(self.player_name)
         elif isinstance(self.current_view, Hall_of_fame_view):
-            self.current_view.update(self.save_manager.get_best_scores(), self.save_manager.get_last_score())
+            self.current_view.update(self.save_manager.get_hall_of_fame())
             #~======================Collisions functions======================~#          
     def check_collision(self):
         self.check_borders(self.player_ship)
@@ -167,11 +167,14 @@ class Game:
         if self.player_base.death:
             if self.score == None:
                 self.score = 0
-            self.save_manager.save_score(self.player_name, self.score)
+                self.save_manager.save_score(self.player_name, 0)
+            else:
+                self.save_manager.save_score(self.player_name, self.score)
             self.change_view(View_state.HALL_OF_FAME)
     
     def set_player_bonus(self, bonus):
         self.player_ship.set_bonus(bonus)
+        self.score = None
         self.current_level += 1
         self.nunmber_of_waves += 2
         self.number_of_ennemies += 2

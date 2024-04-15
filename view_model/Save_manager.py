@@ -37,3 +37,21 @@ class Save_manager:
         if len(scores) > 0:
             return scores[-1]
         return None
+    
+    def last_score_in_best_scores(self):
+        best_scores = self.get_best_scores()
+        last_score = self.get_last_score()
+        if last_score in best_scores:
+            return True
+        return False
+    
+    def get_hall_of_fame(self):
+        if self.last_score_in_best_scores():
+            return self.get_best_scores()
+        else:
+            scores = self.get_best_scores()
+            last_score = self.get_last_score()
+            scores.sort(key=lambda score: score['score'], reverse=True)
+            # Insert at index 4
+            scores.insert(4, last_score)
+            return scores[:5]
