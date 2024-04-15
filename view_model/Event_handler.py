@@ -134,6 +134,8 @@ class Event_handler:
             
                 
     def handle_hall_of_fame_event(self, event):
+        pass
+        
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_ESCAPE:
                 self.game.stop()

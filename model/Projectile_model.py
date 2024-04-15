@@ -10,7 +10,7 @@ class Projectile_model:
         self.speed = speed
         self.radius = 5  # Rayon du projectile
         mixer.init()
-        self.shoot_sound = mixer.Sound("./assets/vfx/sounds/shoot.wav")
+        self.shoot_sound = mixer.Sound("./assets/vfx/sounds/laser-gun-shot.mp3")
         self.shoot_sound.set_volume(0.05)
         self.shoot_sound.play()
 
