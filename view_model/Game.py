@@ -195,6 +195,6 @@ class Game:
         self.score = None
         self.score_multiplier = 1
         self.player_ship = Player_ship_model(self.screen.get_width()/2, self.screen.get_height()/2, 39, 95, 1, 10,(255, 0, 0))
-        self.player_base = Player_base_model((0,255,0), self.screen.get_width()/2, self.screen.get_height()/2, 77, 65, 50)
+        self.player_base = Player_base_model((0,255,0), self.screen.get_width()/2, self.screen.get_height()/2, 77, 65, 100)
         self.level = Level_wave_model(self.screen.get_width(), self.screen.get_height(), self.nunmber_of_waves, self.number_of_ennemies,self.enemies_attack_multiplier, self.enemies_life_multiplier)        
         self.change_view(View_state.GAME)
