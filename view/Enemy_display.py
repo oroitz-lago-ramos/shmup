@@ -25,8 +25,8 @@ class Enemy_display:
             self.rect = self.image_phase_1.get_rect(center=(self.x, self.y))
             screen.blit(self.image_phase_1, self.rect)
         else:
-
-            screen.blit(self.image_phase_2, (self.x, self.y))
+            self.rect = self.image_phase_2.get_rect(center=(self.x, self.y))
+            screen.blit(self.image_phase_2, self.rect)
 
     def draw(self, screen, color=(0, 0, 255)):
         pygame.draw.rect(screen, color, self.rect)
