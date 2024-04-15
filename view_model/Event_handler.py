@@ -62,10 +62,10 @@ class Event_handler:
 
         
         if pygame.K_z not in self.pressed_keys and pygame.K_s not in self.pressed_keys and pygame.K_q not in self.pressed_keys and pygame.K_d not in self.pressed_keys:
-            self.game.player_ship.timer_decelerate += self.game.clock.tick_busy_loop(60) # bug acceleration de toutes les entités qui s'affichent
-            if self.game.player_ship.timer_decelerate >= 100:
+            self.game.player_ship.timer_decelerate += 1
+            if self.game.player_ship.timer_decelerate >= 5:
                 self.game.player_ship.decelerate()
-                self.game.player_ship.timer_decelerate -= 100
+                self.game.player_ship.timer_decelerate -= 5
             
         else:
             self.game.player_ship.accelerate()
