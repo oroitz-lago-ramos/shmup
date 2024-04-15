@@ -77,6 +77,7 @@ class Game:
             self.current_view.hud.set_current_timer(self.level.timer)
             self.current_view.hud.set_current_level(self.level.wave_number)
             self.current_view.hud.set_current_hp(self.player_base.health)
+            self.current_view.hud.set_current_cd(self.player_base.bomb_available)
 
             #Update models
             self.score = self.level.update(self.frame_time, self.player_base.get_center(), self.score, self.score_multiplier)
