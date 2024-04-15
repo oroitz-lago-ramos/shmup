@@ -143,7 +143,8 @@ class Game:
                     enemy.second_phase = True
                     enemy.width = 30
                     enemy.height = 30
-                    enemy.color = (255, 0, 255)
+                    enemy.max_speed = 0.4
+                    enemy.velocity.scale_to_length(enemy.max_speed)
                     
     
             
