@@ -134,12 +134,19 @@ class Event_handler:
             
                 
     def handle_hall_of_fame_event(self, event):
-        pass
+        x_button = self.game.current_view.get_x_button()
+        replay_button = self.game.current_view.get_replay_button()
         
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_ESCAPE:
                 self.game.stop()
-
+        elif event.type == pygame.MOUSEBUTTONDOWN:
+            mouse_pos = pygame.mouse.get_pos()
+            if x_button[0] <= mouse_pos[0] <= x_button[0] + x_button[2] and x_button[1] <= mouse_pos[1] <= x_button[1] + x_button[3]:
+                self.game.change_view(vm.View_state.MAIN_MENU)
+            elif replay_button[0] <= mouse_pos[0] <= replay_button[0] + replay_button[2] and replay_button[1] <= mouse_pos[1] <= replay_button[1] + replay_button[3]:
+                self.game.reset_game()
+                
     def handle_choose_bonus_event(self, event):
         if event.type == pygame.MOUSEBUTTONDOWN:  # If the user clicked the mouse
             x, y = pygame.mouse.get_pos()  # Get the position of the mouse

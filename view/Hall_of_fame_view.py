@@ -7,7 +7,6 @@ class Hall_of_fame_view:
         self.text = Text()
         
         self.list = []
-        self.last_score = None
                 
         self.background = pygame.image.load("assets/images/background/hall_of_fame.png")
         self.background = pygame.transform.scale(self.background, (self.game.screen.get_width(), self.game.screen.get_height()))
@@ -40,7 +39,7 @@ class Hall_of_fame_view:
         self.game.screen.blit(self.little_frame, (self.game.screen.get_width() //2 - self.little_frame.get_width() // 2, int(self.game.screen.get_height() * 0.205)))
         
         for i, score in enumerate(self.list):
-            if self.last_score and score['score'] == self.last_score['score'] and score['user_name'] == self.last_score['user_name']:
+            if self.game.score == score['score'] and self.game.player_name == score['user_name']:
                 color = (0,255,0)
             else:
                 color = (255,255,255)
@@ -56,13 +55,6 @@ class Hall_of_fame_view:
                 self.game.screen.blit(self.rectangle, (self.game.screen.get_width() //2 - self.rectangle.get_width() // 2, int(self.game.screen.get_height() * 0.23) + i* int(self.game.screen.get_height() * 0.14)))
                 self.text.draw_text(self.game.screen, f"{score['user_name']} - {int(score['score'])}", self.game.screen.get_width()//2 - int(self.game.screen.get_width() * 0.07), int(self.game.screen.get_height() * 0.26) + i* int(self.game.screen.get_height() * 0.14), int(self.game.screen.get_width() * 0.1), "score_font", color)
                 self.game.screen.blit(self.empty_star, (self.game.screen.get_width() //2 - self.empty_star.get_width() - int(self.game.screen.get_width() * 0.077), int(self.game.screen.get_height() * 0.24) + i* int(self.game.screen.get_height() * 0.15)))
-            elif i == 4:
-                if self.game.score != None and self.last_score:
-                    self.game.screen.blit(self.rectangle, (self.game.screen.get_width() //2 - self.rectangle.get_width() // 2, int(self.game.screen.get_height() * 0.23) + i* int(self.game.screen.get_height() * 0.14)))
-                    self.text.draw_text(self.game.screen, f"{self.last_score['user_name']} - {int(self.last_score['score'])}", self.game.screen.get_width()//2 - int(self.game.screen.get_width() * 0.07), int(self.game.screen.get_height() * 0.26) + i* int(self.game.screen.get_height() * 0.14), int(self.game.screen.get_width() * 0.1), "score_font", (0,255,0))
-                else:
-                    self.game.screen.blit(self.rectangle, (self.game.screen.get_width() //2 - self.rectangle.get_width() // 2, int(self.game.screen.get_height() * 0.23) + i* int(self.game.screen.get_height() * 0.14)))
-                    self.text.draw_text(self.game.screen, f"{score['user_name']} - {int(score['score'])}", self.game.screen.get_width()//2 - int(self.game.screen.get_width() * 0.07), int(self.game.screen.get_height() * 0.26) + i* int(self.game.screen.get_height() * 0.14), int(self.game.screen.get_width() * 0.1), "score_font", color)
             else:
                 self.game.screen.blit(self.rectangle, (self.game.screen.get_width() //2 - self.rectangle.get_width() // 2, int(self.game.screen.get_height() * 0.23) + i* int(self.game.screen.get_height() * 0.14)))
                 self.text.draw_text(self.game.screen, f"{score['user_name']} - {int(score['score'])}", self.game.screen.get_width()//2 - int(self.game.screen.get_width() * 0.07), int(self.game.screen.get_height() * 0.26) + i* int(self.game.screen.get_height() * 0.14), int(self.game.screen.get_width() * 0.1), "score_font", color)
@@ -74,9 +66,13 @@ class Hall_of_fame_view:
             self.text.draw_text(self.game.screen, f"GAME ENDED!", self.game.screen.get_width()//2 - int(self.game.screen.get_width() * 0.15), int(self.game.screen.get_height() * 0.05), int(self.game.screen.get_width() * 0.2), "last_score_font", (255,255,255))
         else:
             self.text.draw_text(self.game.screen, f"SCOREBOARD", self.game.screen.get_width()//2 - int(self.game.screen.get_width() * 0.15), int(self.game.screen.get_height() * 0.05), int(self.game.screen.get_width() * 0.2), "last_score_font", (255,255,255))
-            
-    
-    def update(self, list, last_score):
+        
+    def get_x_button(self):
+        return self.game.screen.get_width() //2 + self.x_button.get_width() * 4 - int(self.game.screen.get_width() * 0.025),self.game.screen.get_height() - self.x_button.get_height() - int(self.game.screen.get_height() * 0.05), self.x_button.get_width(), self.x_button.get_height()
+        
+    def get_replay_button(self):
+        return self.game.screen.get_width() //2 + self.replay_button.get_width() * 4.8, self.game.screen.get_height() - self.replay_button.get_height() - int(self.game.screen.get_height() * 0.05), self.replay_button.get_width(), self.replay_button.get_height()
+    def update(self, list):
         self.list = list
-        self.last_score = last_score
+    
     
