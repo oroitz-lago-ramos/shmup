@@ -127,7 +127,7 @@ class Event_handler:
             elif button_parameter_x <= mouse_x <= button_parameter_x + button_parameter_width and \
             button_parameter_y <= mouse_y <= button_parameter_y + button_parameter_height:
                 self.game.sound_manager.play_click_sound()
-                self.game.change_view(vm.View_state.PARAMETER)
+                self.game.change_view(vm.View_state.HALL_OF_FAME)
 
             
                 
@@ -141,8 +141,10 @@ class Event_handler:
         elif event.type == pygame.MOUSEBUTTONDOWN:
             mouse_pos = pygame.mouse.get_pos()
             if x_button[0] <= mouse_pos[0] <= x_button[0] + x_button[2] and x_button[1] <= mouse_pos[1] <= x_button[1] + x_button[3]:
+                self.game.sound_manager.play_click_sound()
                 self.game.change_view(vm.View_state.MAIN_MENU)
             elif replay_button[0] <= mouse_pos[0] <= replay_button[0] + replay_button[2] and replay_button[1] <= mouse_pos[1] <= replay_button[1] + replay_button[3]:
+                self.game.sound_manager.play_click_sound()
                 self.game.reset_game()
                 
     def handle_choose_bonus_event(self, event):

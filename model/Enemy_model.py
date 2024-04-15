@@ -1,6 +1,7 @@
 from model.Moving_entity import Moving_entity
 import random
 from pygame import math
+from pygame import mixer
 
 
 class Enemy_model(Moving_entity):

@@ -5,9 +5,10 @@ class Sound_manager:
     def __init__(self, game) -> None:
         self.game = game
         mixer.init()
-        # self.background = mixer.Sound("assets/sound/background.wav")
+        mixer.set_num_channels(32)
+        # self.background = mixer.Sound("assets/vfx/musics/background.wav")
         # self.background.set_volume(0.1)
-        # self.background.play(-1)
+        
         # self.shoot = mixer.Sound("assets/sound/shoot.wav")
         # self.shoot.set_volume(0.1)
         # self.explosion = mixer.Sound("assets/sound/explosion.wav")
@@ -42,8 +43,10 @@ class Sound_manager:
             pass
         elif isinstance(self.game.current_view, self.game.VIEW_STATES[View_state.GAME]):
             self.menu.stop()
+            # self.background.play(-1)
         elif isinstance(self.game.current_view, self.game.VIEW_STATES[View_state.HALL_OF_FAME]):
-            pass
+            # self.background.stop()
+            self.menu.stop()
     
     def play_start_sound(self):
         self.start_sound.play()

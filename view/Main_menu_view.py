@@ -63,7 +63,7 @@ class Main_menu_view(View_interface):
         button_parameter = pygame.image.load("./assets/images/table.png")
         button_parameter = pygame.transform.scale(button_parameter, (200, 50))
         self.game.screen.blit(button_parameter, (self.game.screen.get_width()//2 - 80, self.game.screen.get_height()//3 + 160))
-        self.text.draw_text(self.game.screen, "Parameter", self.game.screen.get_width()//2 - 60 , self.game.screen.get_height()//3 + 165, 30, "menu_font", (127, 218, 95))
+        self.text.draw_text(self.game.screen, "   Scores", self.game.screen.get_width()//2 - 60 , self.game.screen.get_height()//3 + 165, 30, "menu_font", (127, 218, 95))
         
         #Player name
         self.text.draw_text(self.game.screen, "Player name: ", self.game.screen.get_width()//2 - 160, self.game.screen.get_height()//3 - 25, 30, "player_name", (127, 218, 95))
