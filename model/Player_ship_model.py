@@ -16,21 +16,24 @@ class Player_ship_model(Moving_entity):
         self.damage = 10
 
     def decelerate(self):
+        """Decelerate the player ship"""
         if self.velocity.length() > 0:
             if self.velocity.length() > self.deceleration:
                 self.velocity.scale_to_length(max(0, self.velocity.length() - self.deceleration))
-                # print(self.velocity.length())
             else:
                 super().stop()
             
     def update_canons(self,dt,mouse):
+        """Update the canons of the player ship"""
         for canon in self.canons:
             canon.update(self.x,self.y, dt, mouse)
     
     def update(self, dt, mouse):
+        """Update the player ship"""
         self.update_canons(dt, mouse)
     
     def set_bonus(self, bonus):
+        """Set the bonus of the player ship"""
         if bonus == "Boost 1":
             self.damage += 20
         elif bonus == "Boost 2":

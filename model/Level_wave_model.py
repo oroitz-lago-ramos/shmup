@@ -23,15 +23,18 @@ class Level_wave_model():
         self.start_timer()
     
     def randomize_side(self):
+        """Randomize the side of the ennemy spawn"""
         self.side = random.randint(0,1)
 
     def display_position(self):
+        """Return the position of the ennemy spawn according to the side of the screen"""
         if self.side == 0:
             return (-100,random.randint(0,self.screen_height))
         else:
             return ((self.screen_width+100),random.randint(0,self.screen_height))
 
     def create_wave(self,nb_wave,nb_enemy, player_base_position):
+        """Create a wave of ennemies"""
         for i in range(nb_wave):
             self.randomize_side()
             self.wave[i] = []
@@ -42,15 +45,13 @@ class Level_wave_model():
         return self.wave
     
     def update_wave(self):
+        """Update the wave when the timer is over"""
         if self.wave_number in self.wave:
             if self.wave[self.wave_number] and self.wave_number != len(self.wave):
                 self.add_current_ennemy(self.wave_number)
             else:
                 self.wave_number += 1
         
-        # print(self.end)
-
-
     def update(self,dt, player_base_position, score, score_multiplier):
         """Update the level wave model in the main loop
         param dt: time since last frame
@@ -75,8 +76,6 @@ class Level_wave_model():
         if self.wave_number == len(self.wave) and self.current_ennemy == []:
             self.end = True
         return score
-        # print(self.end)
-        # print(self.current_ennemy)
         
     def ennemy_destroyed(self, ennemy):
         """Remove the ennemy from the current ennemy list

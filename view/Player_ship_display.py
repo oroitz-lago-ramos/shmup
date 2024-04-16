@@ -14,7 +14,6 @@ class Player_ship_display:
         self.canon_display = Canon_display()
         
     def draw(self, screen, canons):
-        # pygame.draw.rect(screen, (255, 0, 0), self.rect)
         screen.blit(self.image, self.image_rect)
         screen.blit(self.image_surface, self.image_rect)
 
@@ -25,7 +24,6 @@ class Player_ship_display:
     def update(self,screen, x, y, canons):
         self.x = x
         self.y = y
-        # self.rect.center = (self.x , self.y)
         self.image_rect.center = (self.x, self.y)
         self.draw(screen, canons)
     def get_rect(self):

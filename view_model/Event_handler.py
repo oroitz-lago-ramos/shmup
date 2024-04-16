@@ -2,11 +2,13 @@ import view_model as vm
 import pygame
 
 class Event_handler:
+    """A class that manages the events of the game"""
     def __init__(self, game):
         self.game = game
         self.pressed_keys = set()
          
     def handle_event(self):
+        """Handle the events of the game according to the current view state"""
         if isinstance(self.game.current_view, self.game.VIEW_STATES[vm.View_state.START_MENU]):
             self.pressed_keys.clear()
             for event in pygame.event.get():
@@ -63,8 +65,7 @@ class Event_handler:
             self.game.player_ship.timer_decelerate += 1
             if self.game.player_ship.timer_decelerate >= 5:
                 self.game.player_ship.decelerate()
-                self.game.player_ship.timer_decelerate -= 5
-            
+                self.game.player_ship.timer_decelerate -= 5    
         else:
             self.game.player_ship.accelerate()
         self.game.player_ship.move()
@@ -95,11 +96,9 @@ class Event_handler:
                 self.game.sound_manager.play_click_sound()
                 self.game.reset_game()
             elif event.key == pygame.K_BACKSPACE:
-                # Remove the last character from player_name
                 self.game.sound_manager.play_click_sound()
                 self.game.player_name = self.game.player_name[:-1]
             elif event.unicode.isalnum() or event.unicode == " ":
-                # Append the pressed character to player_name
                 if self.game.player_name == "" and event.unicode == " ":
                     return
                 self.game.player_name += event.unicode
@@ -148,10 +147,10 @@ class Event_handler:
                 self.game.reset_game()
                 
     def handle_choose_bonus_event(self, event):
-        if event.type == pygame.MOUSEBUTTONDOWN:  # If the user clicked the mouse
-            x, y = pygame.mouse.get_pos()  # Get the position of the mouse
-            if 100 <= x <= 300 and 250 <= y <= 300:  # If the user clicked on the text for boost 1
+        if event.type == pygame.MOUSEBUTTONDOWN: 
+            x, y = pygame.mouse.get_pos()  
+            if 100 <= x <= 300 and 250 <= y <= 300:  
                 self.game.set_player_bonus(self.game.current_view.boost1)
-            elif 500 <= x <= 700 and 250 <= y <= 300:  # If the user clicked on the text for boost 2
+            elif 500 <= x <= 700 and 250 <= y <= 300:  
                 self.game.set_player_bonus(self.game.current_view.boost2)
             

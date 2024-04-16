@@ -15,41 +15,48 @@ class Game:
         View_state.CHOOSE_BONUS: Bonus_view
     }    
     def __init__(self) -> None:
+        # Pygame initialisation
         pygame.init()
         self.text = Text()
         self.screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
         self.clock = pygame.time.Clock()
         self.running = True
+        
+        # View_model instantiations
         self.save_manager = Save_manager()
         self.sound_manager = Sound_manager(self)
         self.event_handler = Event_handler(self)
         self.change_view(View_state.START_MENU)
         
-        
+        # Game initialisation
         self.current_level = 1
         self.nunmber_of_waves = 5
         self.number_of_ennemies = 5
         self.enemies_attack_multiplier = 1
         self.enemies_life_multiplier = 0.9
         
+        # Player stats
         self.player_name = ""
         self.score = None
         self.score_multiplier = 1
         
-        
+        # Models initialisation
         self.player_ship = Player_ship_model(self.screen.get_width()/2, self.screen.get_height()/2, 39, 95, 1, 10,(255, 0, 0))
         self.player_base = Player_base_model((0,255,0), self.screen.get_width()/2, self.screen.get_height()/2, 77, 65, 100)
         self.level = Level_wave_model(self.screen.get_width(), self.screen.get_height(), self.nunmber_of_waves, self.number_of_ennemies,self.enemies_attack_multiplier, self.enemies_life_multiplier)        
         
     def change_view(self, state):
+        """Change the current view of the game to the view corresponding to the state passed in parameter and plays the music of the view"""
         self.current_view = self.VIEW_STATES[state](self)
         self.sound_manager.play_music()
         
     def run(self) -> None:
+        """Run the game"""
         self.main()
         pygame.quit()
         
     def stop(self) -> None:
+        """Stop the game"""
         self.running = False
     
     def main(self) -> None:
@@ -72,7 +79,9 @@ class Game:
             
     
     def update(self):
+        """Update the game logic and the view of the game"""
         if isinstance(self.current_view, Game_view):
+            
             #Update stats display
             self.current_view.hud.set_current_timer(self.level.timer)
             self.current_view.hud.set_current_level(self.level.wave_number)
@@ -83,25 +92,29 @@ class Game:
             self.score = self.level.update(self.frame_time, self.player_base.get_center(), self.score, self.score_multiplier)
             self.player_ship.update(self.frame_time, pygame.mouse.get_pos())
             self.player_base.update(self.frame_time)
+            
             #Update views
             self.current_view.draw_player_base(self.player_base.x, self.player_base.y, self.player_base.planet_radius)
             self.current_view.draw_enemy(self.level.current_ennemy)
             self.current_view.draw_player_ship(self.player_ship.x, self.player_ship.y, self.player_ship.canons)
+            
             #Verify for collisions
             self.check_collision()
             self.verify_ended_level()
             self.verify_lost()
+            
         elif isinstance(self.current_view, Main_menu_view):
             self.current_view.update(self.player_name)
         elif isinstance(self.current_view, Hall_of_fame_view):
             self.current_view.update(self.save_manager.get_hall_of_fame())
             #~======================Collisions functions======================~#          
     def check_collision(self):
+        """Checks all the collisions in the game"""
         self.check_borders(self.player_ship)
         self.check_border_projectile()
         self.check_collision_base()
         self.check_collision_projectile()
-        #Fonction qui va check si enemy dans planete
+        
     def check_border_projectile(self):
         """Check if the projectile is out of the screen and remove it from the canon's list of projectile if it is the case"""
         for canon in self.player_ship.canons:
@@ -131,6 +144,7 @@ class Game:
             self.check_collision_projectile_enemy(enemy)
             
     def check_collision_base(self):
+        """Check if the enemy hit the player base and remove the enemy and do damage to the player's base life."""
         for enemy in self.level.current_ennemy:
             if enemy.second_phase:
                 if enemy.x - enemy.width // 2 < self.player_base.x < enemy.x + enemy.width // 2 and enemy.y - enemy.height // 2 < self.player_base.y < enemy.y + enemy.height // 2:
@@ -163,9 +177,11 @@ class Game:
                     
 #===========================Logic verification===========================#
     def verify_ended_level(self):
+        """Verify if the level is ended and change the view to the choose bonus view if it is the case"""
         if self.level.end:
             self.change_view(View_state.CHOOSE_BONUS)
     def verify_lost(self):
+        """Verify if the player is dead and change the view to the hall of fame view if it is the case"""
         if self.player_base.death:
             if self.score == None:
                 self.score = 0
@@ -175,6 +191,7 @@ class Game:
             self.change_view(View_state.HALL_OF_FAME)
     
     def set_player_bonus(self, bonus):
+        """Set the player's bonus and change the view to the game view with a harder level"""
         self.player_ship.set_bonus(bonus)
         self.score = None
         self.current_level += 1
@@ -188,6 +205,7 @@ class Game:
         
 #===========================RESET GAME===========================#
     def reset_game(self):
+        """Reset the game to the initial state"""
         self.current_level = 1
         self.nunmber_of_waves = 5
         self.number_of_ennemies = 5

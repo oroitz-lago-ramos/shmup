@@ -1,5 +1,6 @@
 from model import Entity_model
 class Player_base_model(Entity_model):
+    """A class that represents the player base in the game. It inherits from the Entity_model class."""
     def __init__(self, color, x, y, width, height, max_health):
         super().__init__(color, x, y, width, height)
         self.max_health = max_health
@@ -21,10 +22,12 @@ class Player_base_model(Entity_model):
             self.death = True
     
     def update(self,dt):
+        """Update the player base. arg: dt (float)"""
         self.check_if_alive()
         self.update_bomb(dt)
         
     def update_bomb(self, dt):
+        """Update the bomb of the player base. arg: dt (float)"""
         if not self.bomb_available:
             self.time_since_last_bomb += dt
             self.current_cooldown = self.cooldown - self.time_since_last_bomb
@@ -34,6 +37,7 @@ class Player_base_model(Entity_model):
                 self.current_cooldown = 0
 
     def use_bomb(self, enemies):
+        """Use the bomb of the player base. arg: enemies (list)"""
         if self.bomb_available:
             for enemy in enemies:
                 if enemy.second_phase:

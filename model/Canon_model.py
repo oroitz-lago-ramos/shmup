@@ -53,6 +53,10 @@ class Canon_model(Entity_model):
         
 
     def update_projectiles(self, dt, ship_x, ship_y, mouse):
+        """
+        Update the projectiles of the canon. arg: dt (float), ship_x (int), ship_y (int), mouse (tuple)
+        appends a new projectile to the projectiles list if the reload time is reached and updates the projectiles
+        """
         self.time_since_last_shot += dt
 
         if self.time_since_last_shot >= self.reload_time:

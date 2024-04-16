@@ -27,13 +27,11 @@ class Canon_display (sprite.Sprite):
         self.update_canon_position(x,y)
         self.update_image_rotation(self.calcule_angle())
         if self.rotated_image:
-            # print("rotated image", self.rotated_image)
             screen.blit(self.rotated_image,self.rotated_image_rect)
     
     def draw_projectiles(self, screen, projectiles):
         for projectile in projectiles:
             self.projectile_display.draw(projectile.x, projectile.y, projectile.angle, screen)
-            # print("projectiles angle", projectile.angle)
 
     def calcule_angle(self):
         mouse_x, mouse_y = pygame.mouse.get_pos()
@@ -50,4 +48,3 @@ class Canon_display (sprite.Sprite):
         self.x = x
         self.y = y
         self.rect.center = (self.x, self.y)
-        # print("rect center", self.rect.center)

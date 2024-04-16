@@ -42,12 +42,9 @@ class Hud:
         self.bombe_available = value
     
     def scale_health(self):
-        print("current health", self.current_health)
-        print("scale", (self.current_health/100) * 133)
         self.hp_dot_img_resized =pygame.transform.scale(self.hp_dot_img, (int((self.current_health/100) * 133), 21))
         self.hp_bar_surface.fill((0, 0, 255, 0))
         self.hp_bar_surface.blit(self.hp_dot_img_resized, (3,3))
-        print("hp dot img", self.hp_dot_img)
 
     def draw_hud(self):
         self.game.screen.blit(self.stats_bar_img, ((self.game.screen.get_width()-self.stats_bar_img.get_width())/2, 0))
@@ -65,9 +62,7 @@ class Hud:
             self.special_dot_surface.blit(self.clock_icon_img, self.clock_icon_rect)
 
     def update(self):
-        # self.hp_bar_surface.fill((0, 0, 255, 128))
         self.stats_surface.fill((255,0,0,0))
-        # self.special_dot_surface.fill((0,255,0,128))
         self.level_text = self.text.draw_text(self.stats_surface, f"Wave : {self.current_wave}", 17, (self.stats_surface.get_height()/4), 12, "stats_font", (0,255,0))
         self.timer_text = self.text.draw_text(self.stats_surface, f"Timer : {self.timer}", 17+ self.stats_surface.get_width()/3, (self.stats_surface.get_height()/4), 12, "stats_font", (0,255,0)) 
         self.score_text = self.text.draw_text(self.stats_surface, f"Level : {self.game.current_level}", 17+ 2*self.stats_surface.get_width()/3, (self.stats_surface.get_height()/4), 12, "stats_font", (0,255,0))

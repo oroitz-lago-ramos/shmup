@@ -32,6 +32,7 @@ class Enemy_model(Moving_entity):
         self.check_if_alive()
     
     def determine_direction(self):
+        """Determine the direction of the enemy."""
         # Calculate the direction of the enemy
         # The direction is calculated by the difference between the player_base position and the enemy's position
         direction = self.player_base_position - self.get_center()
@@ -41,6 +42,7 @@ class Enemy_model(Moving_entity):
         if self.health <= 0:
             self.death = True
     def kill(self):
+        """Kill the enemy."""
         self.death = True
     
     
