@@ -69,8 +69,8 @@ class Game:
             self.update()
             
             #Printing the fps
-            fps = self.clock.get_fps()
-            self.text.draw_fps(self.screen, fps)
+            # fps = self.clock.get_fps()
+            # self.text.draw_fps(self.screen, fps)
             
             pygame.display.update()
             
